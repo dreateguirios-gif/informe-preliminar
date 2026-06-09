@@ -1285,10 +1285,13 @@
         @media print {
             @page {
                 size: letter portrait;
+                margin: 20mm;
+            }
+            @page :first {
                 margin: 0mm;
             }
             body {
-                padding: 10mm 15mm !important;
+                padding: 0 !important;
                 margin: 0 !important;
                 background-color: #ffffff !important;
                 color: #0F172A !important;
@@ -1304,7 +1307,8 @@
             .tab-buttons, 
             .simulator-inputs, 
             #simCheckboxes,
-            .modal {
+            .modal,
+            .main-header {
                 display: none !important;
             }
             .main-content {
@@ -1336,35 +1340,52 @@
             .portada-hero {
                 background: #0A1628 !important;
                 color: #ffffff !important;
-                border: 2px solid #C17F3E !important;
-                padding: 1.5rem !important;
+                border: none !important;
+                border-radius: 0 !important;
+                padding: 12mm 15mm !important;
                 margin: 0 !important;
-                height: 250mm !important;
-                max-height: 250mm !important;
+                width: 100% !important;
+                height: 279mm !important;
+                max-height: 279mm !important;
+                overflow: hidden !important;
                 page-break-before: avoid !important;
                 page-break-after: always !important;
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
                 display: flex;
                 flex-direction: column;
-                justify-content: space-between;
+                justify-content: center;
+                align-items: center;
                 box-sizing: border-box !important;
+            }
+            .portada-hero::before {
+                display: none !important;
+            }
+            .portada-badge {
+                margin-bottom: 0.8rem !important;
             }
             .portada-hero h1 {
                 color: #ffffff !important;
-                font-size: 2rem !important;
+                font-size: 1.6rem !important;
+                margin-bottom: 0.5rem !important;
+                line-height: 1.2 !important;
             }
             .portada-hero p.subtitle {
                 color: #DBA04E !important;
-                margin-bottom: 1.2rem !important;
+                margin-bottom: 1rem !important;
+                font-size: 1rem !important;
             }
             .cover-collage {
-                max-width: 550px !important;
-                margin: 0 auto 1.2rem !important;
-                gap: 1rem !important;
+                max-width: 480px !important;
+                margin: 0 auto 1rem !important;
+                gap: 0.8rem !important;
             }
             .collage-card img {
-                height: 140px !important;
+                height: 115px !important;
+            }
+            .collage-card .caption {
+                padding: 0.4rem !important;
+                font-size: 0.65rem !important;
             }
             .cover-meta {
                 background: rgba(255, 255, 255, 0.05) !important;
@@ -1373,9 +1394,11 @@
                 justify-content: space-around !important;
                 flex-wrap: nowrap !important;
                 gap: 1rem !important;
-                padding: 0.8rem !important;
+                padding: 0.8rem 1.5rem !important;
+                margin-top: 1rem !important;
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
+                max-width: 550px !important;
             }
             .back-cover {
                 background: #0A1628 !important;
@@ -1569,7 +1592,8 @@
         .html2pdf-mode .tab-buttons, 
         .html2pdf-mode .simulator-inputs, 
         .html2pdf-mode #simCheckboxes,
-        .html2pdf-mode .modal {
+        .html2pdf-mode .modal,
+        .html2pdf-mode .main-header {
             display: none !important;
         }
         .html2pdf-mode .app-container {
@@ -1605,35 +1629,52 @@
         .html2pdf-mode .portada-hero {
             background: #0A1628 !important;
             color: #ffffff !important;
-            border: 2px solid #C17F3E !important;
-            padding: 1.5rem !important;
+            border: none !important;
+            border-radius: 0 !important;
+            padding: 12mm 15mm !important;
             margin: 0 !important;
-            height: 9.6in !important;
-            max-height: 9.6in !important;
+            width: 100% !important;
+            height: 279mm !important;
+            max-height: 279mm !important;
+            overflow: hidden !important;
             page-break-before: avoid !important;
             page-break-after: always !important;
             page-break-inside: avoid !important;
             break-inside: avoid !important;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: center;
+            align-items: center;
             box-sizing: border-box !important;
+        }
+        .html2pdf-mode .portada-hero::before {
+            display: none !important;
+        }
+        .html2pdf-mode .portada-badge {
+            margin-bottom: 0.8rem !important;
         }
         .html2pdf-mode .portada-hero h1 {
             color: #ffffff !important;
-            font-size: 2rem !important;
+            font-size: 1.6rem !important;
+            margin-bottom: 0.5rem !important;
+            line-height: 1.2 !important;
         }
         .html2pdf-mode .portada-hero p.subtitle {
             color: #DBA04E !important;
-            margin-bottom: 1.2rem !important;
+            margin-bottom: 1rem !important;
+            font-size: 1rem !important;
         }
         .html2pdf-mode .cover-collage {
-            max-width: 550px !important;
-            margin: 0 auto 1.2rem !important;
-            gap: 1rem !important;
+            max-width: 480px !important;
+            margin: 0 auto 1rem !important;
+            gap: 0.8rem !important;
         }
         .html2pdf-mode .collage-card img {
-            height: 140px !important;
+            height: 115px !important;
+        }
+        .html2pdf-mode .collage-card .caption {
+            padding: 0.4rem !important;
+            font-size: 0.65rem !important;
         }
         .html2pdf-mode .cover-meta {
             background: rgba(255, 255, 255, 0.05) !important;
@@ -1642,9 +1683,11 @@
             justify-content: space-around !important;
             flex-wrap: nowrap !important;
             gap: 1rem !important;
-            padding: 0.8rem !important;
+            padding: 0.8rem 1.5rem !important;
+            margin-top: 1rem !important;
             page-break-inside: avoid !important;
             break-inside: avoid !important;
+            max-width: 550px !important;
         }
         .html2pdf-mode .back-cover {
             background: #0A1628 !important;
@@ -2293,31 +2336,41 @@
             border: none !important;
         }
 
-        /* EXPLICIT PAGE BREAKS FOR KEY SECTIONS TO PREVENT OVERFLOW AND REDUCE PAGE COUNT */
-        .html2pdf-mode #opcion1,
-        .html2pdf-mode #opcion2,
-        .html2pdf-mode #comparativa,
-        .html2pdf-mode #destacados,
-        .html2pdf-mode #carta,
-        .html2pdf-mode #contraportada {
-            page-break-before: always !important;
-        }
-
+        /* AVOID ORPHANED TITLES AND INTROS */
         @media print {
+            /* Keep headings with their immediate content safely */
+            h1, h2, h3, h4, .section-title {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+                page-break-inside: avoid !important;
+            }
+            
+            /* SMALLER BLOCKS THAT SHOULD NOT SPLIT (avoid blank spaces by allowing sections to flow) */
+            .callout-box, .simulator-widget, .featured-item, .alcance-card, .risk-item, .risk-obs, .objective-item {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            /* EXPLICIT PAGE BREAKS ONLY WHERE ABSOLUTELY NECESSARY */
             #opcion1,
-            #opcion2,
-            #comparativa,
-            #destacados,
             #carta,
             #contraportada {
                 page-break-before: always !important;
             }
-        }
 
-        .html2pdf-mode tr {
-            page-break-inside: avoid !important;
-        }
-        @media print {
+            /* Let sections flow naturally to fill empty space */
+            section {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+                page-break-before: auto !important;
+            }
+
+            /* Improve visual separation without forcing page breaks */
+            #validacion, #cronograma {
+                margin-top: 3rem !important;
+                margin-bottom: 2rem !important;
+            }
+
             tr {
                 page-break-inside: avoid !important;
             }
@@ -2328,18 +2381,18 @@
         .html2pdf-mode .cover-collage {
             display: grid !important;
             grid-template-columns: repeat(3, 1fr) !important;
-            gap: 1rem !important;
-            max-width: 550px !important;
-            margin: 0 auto 1.5rem !important;
+            gap: 0.8rem !important;
+            max-width: 480px !important;
+            margin: 0 auto 1rem !important;
         }
         
         @media print {
             .cover-collage {
                 display: grid !important;
                 grid-template-columns: repeat(3, 1fr) !important;
-                gap: 1rem !important;
-                max-width: 550px !important;
-                margin: 0 auto 1.5rem !important;
+                gap: 0.8rem !important;
+                max-width: 480px !important;
+                margin: 0 auto 1rem !important;
             }
             .dashboard-grid {
                 grid-template-columns: repeat(3, 1fr) !important;
