@@ -1948,6 +1948,19 @@
             .simulator-results {
                 grid-template-columns: repeat(2, 1fr);
             }
+            
+            /* Responsive tables for mobile */
+            .table-responsive {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
+                margin-bottom: 1rem;
+            }
+            .table-responsive table {
+                min-width: 700px; /* Force table to maintain width so container scrolls */
+            }
+            .table-responsive th, .table-responsive td {
+                white-space: normal;
+            }
         }
 
         /* --- EXECUTIVE DASHBOARD CSS --- */
