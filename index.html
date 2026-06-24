@@ -3,3808 +3,906 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Informe Preliminar de Sourcing y Evaluación Comercial</title>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- FontAwesome for Premium Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- html2pdf.js library for direct PDF download -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
+    <title>SMART IMPORT - Dashboard de Viabilidad Comercial</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS VARIABLES FOR PREMIUM THEME */
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
         :root {
-            --primary-navy: #0A1628;
-            --primary-navy-rgb: 10, 22, 40;
-            --copper: #C17F3E;
-            --gold-light: #DBA04E;
-            --warm-cream: #F5F0E8;
-            --steel-gray: #8892A0;
-            --text-dark: #1E2530;
-            --text-light: #6E798A;
-            --pure-white: #FFFFFF;
-            --bg-light: #F9F7F5;
-            --card-shadow: 0 10px 30px rgba(10, 22, 40, 0.04);
-            --card-shadow-hover: 0 15px 40px rgba(193, 127, 62, 0.12);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --border-radius: 12px;
-            --sidebar-width: 290px;
-        }
-
-        /* DARK MODE VARIABLE OVERRIDES */
-        body.dark-theme {
-            --primary-navy: #0A1628;
-            --warm-cream: #141E30;
-            --text-dark: #E6EDF8;
-            --text-light: #9BB2C0;
-            --pure-white: #1B2635;
-            --bg-light: #0F172A;
-            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            --card-shadow-hover: 0 15px 40px rgba(219, 160, 78, 0.15);
-        }
-
-        /* BASE STYLES */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            scroll-behavior: smooth;
+            --bg-main: #F4F6F9; 
+            --bg-panel: #FFFFFF; 
+            --navy-dark: #0A1628; 
+            --navy-light: #132240; 
+            --copper: #C17F3E; 
+            --copper-light: #DBA04E;
+            --cream: #F5F0E8; 
+            --gray-text: #64748B;
+            --border-color: #E2E8F0;
+            --success-bg: #E6F4EA;
+            --success-text: #137333;
+            --font-main: 'Aptos', 'Calibri', sans-serif;
+            --font-display: 'Montserrat', sans-serif;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-light);
-            color: var(--text-dark);
+            font-family: var(--font-main);
+            background: var(--bg-main);
+            color: var(--navy-dark);
             line-height: 1.6;
-            transition: var(--transition);
-        }
-
-        h1, h2, h3, h4 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-            color: var(--primary-navy);
-            transition: var(--transition);
-        }
-
-        body.dark-theme h1, body.dark-theme h2, body.dark-theme h3, body.dark-theme h4 {
-            color: var(--pure-white);
-        }
-
-        /* MAIN APP WRAPPER */
-        .app-container {
             display: flex;
             min-height: 100vh;
         }
 
-        /* SIDEBAR STYLES */
+        /* BARRA LATERAL FIXED CON TU LOGO */
         .sidebar {
-            width: var(--sidebar-width);
-            background-color: var(--primary-navy);
-            color: var(--pure-white);
+            width: 320px;
+            background: var(--navy-dark);
+            color: #FFFFFF;
+            padding: 40px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             position: fixed;
             top: 0;
             bottom: 0;
             left: 0;
             z-index: 100;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.1);
+        }
+
+        .sidebar-brand {
+            margin-bottom: 35px;
+            text-align: center;
+        }
+
+        .brand-logo-img {
+            width: 100%;
+            max-width: 240px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .nav-menu {
+            list-style: none;
             display: flex;
             flex-direction: column;
-            padding: 2.5rem 1.5rem;
-            border-right: 1px solid rgba(255, 255, 255, 0.05);
-            transition: var(--transition);
+            gap: 6px;
         }
 
-        .sidebar-logo {
-            text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .sidebar-logo img {
-            max-width: 100%;
-            height: auto;
-            max-height: 50px;
-        }
-
-        .sidebar-logo .fallback-logo {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            color: var(--gold-light);
-        }
-
-        .project-info {
-            margin-bottom: 2rem;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 1rem;
-            border-radius: var(--border-radius);
-            border-left: 3px solid var(--copper);
-        }
-
-        .project-info h4 {
-            color: var(--pure-white);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.3rem;
-        }
-
-        .project-info p {
-            font-size: 0.8rem;
-            color: var(--steel-gray);
-            line-height: 1.3;
-        }
-
-        .sidebar-menu {
-            list-style: none;
-            overflow-y: auto;
-            flex-grow: 1;
-            padding-right: 0.2rem;
-        }
-
-        /* Scrollbar styling for sidebar */
-        .sidebar-menu::-webkit-scrollbar {
-            width: 4px;
-        }
-        .sidebar-menu::-webkit-scrollbar-thumb {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-        }
-
-        .sidebar-menu li {
-            margin-bottom: 0.4rem;
-        }
-
-        .sidebar-menu a {
+        .nav-item a {
             display: flex;
             align-items: center;
-            padding: 0.75rem 1rem;
-            color: var(--steel-gray);
+            padding: 12px 16px;
+            color: #94A3B8;
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: .85rem;
             font-weight: 500;
-            border-radius: var(--border-radius);
-            transition: var(--transition);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
         }
 
-        .sidebar-menu a i {
-            margin-right: 0.75rem;
-            font-size: 1rem;
-            width: 18px;
-            text-align: center;
-            transition: var(--transition);
+        .nav-item a:hover {
+            color: #FFFFFF;
+            background: rgba(255, 255, 255, 0.03);
         }
 
-        .sidebar-menu a:hover,
-        .sidebar-menu li.active a {
-            background-color: rgba(255, 255, 255, 0.06);
-            color: var(--gold-light);
-        }
-
-        .sidebar-menu li.active a i {
-            color: var(--copper);
+        .nav-item.active a {
+            background: linear-gradient(90deg, rgba(193, 127, 62, 0.2) 0%, rgba(193, 127, 62, 0.02) 100%);
+            color: #FFFFFF;
+            border-left-color: var(--copper);
+            font-weight: 600;
         }
 
         .sidebar-footer {
-            margin-top: 1.5rem;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            font-size: 0.7rem;
-            color: var(--steel-gray);
-            text-align: center;
+            border-top: 1px solid rgba(255,255,255,.08);
+            padding-top: 20px;
+            font-size: .7rem;
+            color: #64748B;
+            line-height: 1.5;
         }
 
-        /* MAIN CONTENT STYLES */
+        /* CONTENEDOR PRINCIPAL ORIGINAL ESTABLE */
         .main-content {
-            flex-grow: 1;
-            margin-left: var(--sidebar-width);
-            padding: 2.5rem 3.5rem;
-            transition: var(--transition);
-            width: calc(100% - var(--sidebar-width));
+            margin-left: 320px;
+            flex: 1;
+            padding: 60px 60px 60px 80px;
+            max-width: 1250px;
         }
 
-        /* HEADER */
-        .main-header {
+        .doc-header {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(136, 146, 160, 0.15);
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--copper);
+            padding-bottom: 35px;
         }
 
-        .header-meta {
-            font-size: 0.9rem;
-            color: var(--text-light);
-        }
-
-        .header-meta strong {
-            color: var(--text-dark);
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 0.75rem;
-            align-items: center;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.6rem 1.2rem;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 600;
-            border-radius: var(--border-radius);
-            border: none;
-            cursor: pointer;
-            transition: var(--transition);
-            text-decoration: none;
-            gap: 0.5rem;
-        }
-
-        .btn-primary {
-            background-color: var(--copper);
-            color: var(--pure-white);
-        }
-        .btn-primary:hover {
-            background-color: #a66a31;
-            box-shadow: 0 4px 15px rgba(193, 127, 62, 0.3);
-        }
-
-        .btn-secondary {
-            background-color: var(--pure-white);
-            color: var(--primary-navy);
-            border: 1px solid rgba(136, 146, 160, 0.3);
-        }
-        .btn-secondary:hover {
-            background-color: var(--warm-cream);
-            border-color: var(--steel-gray);
-        }
-
-        .theme-toggle {
-            background: none;
-            border: none;
-            color: var(--text-light);
-            font-size: 1.25rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 50%;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .theme-toggle:hover {
-            color: var(--copper);
-            background-color: rgba(136, 146, 160, 0.1);
-        }
-
-        /* SECTIONS GENERAL */
-        section {
-            background-color: var(--pure-white);
-            padding: 3rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--card-shadow);
-            margin-bottom: 3rem;
-            border: 1px solid rgba(136, 146, 160, 0.08);
-            transition: var(--transition);
-        }
-
-        section:hover {
-            box-shadow: var(--card-shadow-hover);
-            border-color: rgba(193, 127, 62, 0.15);
-        }
-
-        .section-title {
-            font-size: 1.75rem;
-            color: var(--primary-navy);
-            margin-bottom: 1.5rem;
-            position: relative;
-            padding-bottom: 0.5rem;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 45px;
-            height: 3px;
-            background-color: var(--copper);
-            border-radius: 2px;
-        }
-
-        /* TEXT UTILITIES */
-        p.intro-text {
-            font-size: 1.05rem;
-            color: var(--text-dark);
-            margin-bottom: 1.5rem;
-            font-weight: 400;
-        }
-
-        /* PORTADA WEB (Cover Showcase) */
-        .portada-hero {
-            background: linear-gradient(135deg, var(--primary-navy) 0%, #152238 100%);
-            color: var(--pure-white);
-            border-radius: var(--border-radius);
-            padding: 4rem 3rem;
-            text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(10, 22, 40, 0.15);
-        }
-
-        .portada-hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 70% 30%, rgba(219, 160, 78, 0.08) 0%, transparent 60%);
-            pointer-events: none;
-        }
-
-        .portada-badge {
-            display: inline-block;
-            background: rgba(193, 127, 62, 0.2);
-            border: 1px solid var(--copper);
-            color: var(--gold-light);
-            padding: 0.4rem 1rem;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 1.5rem;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .portada-hero h1 {
-            color: var(--pure-white);
-            font-size: 2.3rem;
-            margin-bottom: 1rem;
-            line-height: 1.2;
+        h1 {
+            font-family: var(--font-display);
+            font-size: 3.4rem;
             font-weight: 700;
+            color: var(--navy-dark);
+            line-height: 1.1;
+            letter-spacing: -0.01em;
         }
 
-        .portada-hero p.subtitle {
-            color: var(--gold-light);
-            font-size: 1.15rem;
-            font-family: 'Montserrat', sans-serif;
-            margin-bottom: 2.5rem;
+        .header-meta-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-top: 25px;
+            padding: 20px 30px;
+            background: var(--cream);
+            border-radius: 8px;
+            border-left: 5px solid var(--copper);
+            width: 100%;
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .meta-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--copper);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 6px;
+        }
+
+        .meta-value {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--navy-dark);
+        }
+
+        .subtitle-page {
+            font-size: 1rem;
             font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: .25em;
+            color: var(--copper);
+            margin-top: 12px;
         }
 
-        /* Cover collage grid */
-        .cover-collage {
+        .section-block {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 45px;
+            margin-bottom: 35px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+        }
+
+        .section-block.featured {
+            background: var(--cream);
+            border-color: rgba(193, 127, 62, 0.2);
+        }
+
+        h2 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: var(--copper);
+            margin-bottom: 24px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--bg-main);
+        }
+
+        p {
+            font-size: .98rem;
+            color: #334155;
+            margin-bottom: 18px;
+            text-wrap: pretty;
+        }
+
+        /* DASHBOARD METRICAS */
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 35px;
+        }
+
+        .meta-card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.01);
+        }
+
+        .meta-card .label {
+            font-size: .68rem;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            color: var(--gray-text);
+            margin-bottom: 8px;
+        }
+
+        .meta-card .value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--navy-dark);
+        }
+
+        .meta-card .value.highlight {
+            color: var(--copper);
+        }
+
+        .meta-card .sub-label {
+            font-size: .75rem;
+            color: var(--gray-text);
+            margin-top: 4px;
+        }
+
+        /* GALERÍA DE PRODUCTOS */
+        .product-gallery {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            max-width: 680px;
-            margin: 0 auto 2.5rem;
+            gap: 20px;
+            margin: 25px 0;
         }
 
-        .collage-card {
-            background-color: rgba(255, 255, 255, 0.05);
-            border-radius: var(--border-radius);
+        .product-img-card {
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            transition: var(--transition);
+            text-align: center;
         }
 
-        .collage-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--copper);
-        }
-
-        .collage-card img {
+        .product-img-card img {
             width: 100%;
-            height: 200px;
+            height: 260px;
             object-fit: cover;
             display: block;
         }
 
-        .collage-card .caption {
-            padding: 0.75rem;
-            font-size: 0.75rem;
+        .product-img-title {
+            padding: 12px;
+            font-size: .85rem;
             font-weight: 600;
-            color: var(--warm-cream);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            background-color: rgba(10, 22, 40, 0.8);
+            color: var(--navy-dark);
+            background: var(--bg-panel);
+            border-top: 1px solid var(--border-color);
         }
 
-        /* Metadata banner */
-        .cover-meta {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 2rem;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .meta-item {
-            text-align: left;
-        }
-
-        .meta-item .label {
-            font-size: 0.75rem;
-            color: var(--steel-gray);
-            text-transform: uppercase;
-            font-weight: 600;
-            display: block;
-            margin-bottom: 0.1rem;
-        }
-
-        .meta-item .value {
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        /* LETTER PAGE */
-        .presentation-letter {
-            max-width: 780px;
-            margin: 0 auto;
-        }
-        .signature-block {
-            margin-top: 2.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .signature {
-            border-top: 1px solid var(--steel-gray);
-            padding-top: 0.5rem;
-            width: 200px;
-            text-align: center;
-            font-size: 0.85rem;
-        }
-
-        /* EXECUTIVE CALLOUT BOX (Copper Callout) */
-        .callout-box {
-            background-color: var(--warm-cream);
-            border-left: 5px solid var(--copper);
-            padding: 1.75rem 2rem;
-            border-radius: 0 var(--border-radius) var(--border-radius) 0;
-            margin: 2rem 0;
-            position: relative;
-        }
-
-        .callout-box.copper-solid {
-            background-color: var(--copper);
-            color: var(--pure-white);
-            border-left: none;
-            border-radius: var(--border-radius);
-        }
-
-        .callout-box h4 {
-            color: var(--copper);
-            font-size: 1.05rem;
-            margin-bottom: 0.6rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        /* MINIATURAS INTERNAS */
+        .table-flex-prod {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 15px;
         }
 
-        .callout-box.copper-solid h4 {
-            color: var(--warm-cream);
+        .table-thumb {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.15);
+            flex-shrink: 0;
         }
 
-        .callout-box p {
-            font-size: 0.95rem;
-            font-weight: 500;
+        .table-thumb.light-bg-thumb {
+            border-color: var(--border-color);
         }
 
-        .callout-box.copper-solid p {
-            color: var(--pure-white);
+        /* ESTRUCTURA DE TABLAS ORIGINAL ESTABLE */
+        .table-container {
+            border-radius: 12px;
+            overflow: hidden; 
+            margin: 24px 0 10px;
+            box-shadow: 0 8px 24px rgba(10, 22, 40, 0.06);
         }
 
-        /* BULLET POINTS LISTS */
-        .custom-list {
-            list-style: none;
-            margin: 1.5rem 0;
-        }
-
-        .custom-list li {
-            position: relative;
-            padding-left: 1.75rem;
-            margin-bottom: 0.8rem;
-            font-size: 0.95rem;
-        }
-
-        .custom-list li::before {
-            content: "\f058"; /* check-circle icon */
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            position: absolute;
-            left: 0;
-            top: 2px;
-            color: var(--copper);
-            font-size: 1.1rem;
-        }
-
-        /* DYNAMIC CATALOG STYLES */
-        .catalog-control {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .tab-buttons {
-            display: flex;
-            background: var(--warm-cream);
-            padding: 0.3rem;
-            border-radius: 30px;
-        }
-
-        .tab-btn {
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
-            border: none;
-            cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-            font-size: 0.85rem;
-            background: none;
-            color: var(--text-light);
-            transition: var(--transition);
-        }
-
-        .tab-btn.active {
-            background-color: var(--primary-navy);
-            color: var(--pure-white);
-        }
-
-        .search-box {
-            position: relative;
-            max-width: 300px;
-            width: 100%;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 0.6rem 1rem 0.6rem 2.2rem;
-            border-radius: 30px;
-            border: 1px solid rgba(136, 146, 160, 0.3);
-            background-color: var(--pure-white);
-            color: var(--text-dark);
-            font-size: 0.85rem;
-            outline: none;
-            transition: var(--transition);
-        }
-
-        .search-box input:focus {
-            border-color: var(--copper);
-            box-shadow: 0 0 8px rgba(193, 127, 62, 0.2);
-        }
-
-        .search-box i {
-            position: absolute;
-            left: 0.9rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--steel-gray);
-            font-size: 0.85rem;
-        }
-
-        /* TABLES */
-        .table-responsive {
-            overflow-x: auto;
-            border-radius: var(--border-radius);
-            border: 1px solid rgba(136, 146, 160, 0.2);
-            background-color: var(--pure-white);
+        .table-title {
+            background: var(--navy-dark);
+            padding: 18px 20px;
+            font-size: .85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: #FFFFFF;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             text-align: left;
-            font-size: 0.9rem;
         }
 
-        th {
-            background-color: var(--primary-navy);
-            color: var(--pure-white);
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-            padding: 1rem 1.25rem;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        td {
-            padding: 1rem 1.25rem;
-            border-bottom: 1px solid rgba(136, 146, 160, 0.15);
-            color: var(--text-dark);
+        th, td {
+            padding: 16px 20px;
+            font-size: .9rem;
             vertical-align: middle;
         }
 
-        tr:nth-child(even) td {
-            background-color: rgba(245, 240, 232, 0.3); /* very soft warm cream alternate rows */
-        }
-
-        tr:hover td {
-            background-color: rgba(193, 127, 62, 0.04);
-        }
-
-        .product-thumb {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-            border-radius: 4px;
-            border: 1px solid rgba(136, 146, 160, 0.2);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .product-thumb:hover {
-            transform: scale(1.1);
-            border-color: var(--copper);
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 0.25rem 0.6rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .badge-success {
-            background-color: rgba(40, 167, 69, 0.1);
-            color: #28a745;
-        }
-        .badge-warning {
-            background-color: rgba(220, 53, 69, 0.1);
-            color: #dc3545;
-        }
-
-        .price-text {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-            color: var(--primary-navy);
-        }
-
-        body.dark-theme .price-text {
-            color: var(--pure-white);
-        }
-
-        .price-text.saving {
-            color: var(--copper);
-        }
-        .price-text.negative {
-            color: #ba3c2a;
-        }
-
-        /* COMPARE SUMMARY TILES */
-        .compare-tiles {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .tile {
-            background-color: var(--pure-white);
-            border: 1px solid rgba(136, 146, 160, 0.15);
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            box-shadow: var(--card-shadow);
-            text-align: center;
-        }
-
-        .tile h4 {
-            font-size: 0.8rem;
-            color: var(--text-light);
-            text-transform: uppercase;
-            margin-bottom: 0.5rem;
-        }
-
-        .tile p {
-            font-size: 1.8rem;
-            font-weight: 700;
-            font-family: 'Montserrat', sans-serif;
-            color: var(--primary-navy);
-        }
-
-        body.dark-theme .tile p {
-            color: var(--pure-white);
-        }
-
-        .tile.highlight p {
-            color: var(--copper);
-        }
-
-        /* MODELOS DESTACADOS CARDS (Double-Column Magazine Style) */
-        .featured-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 2.5rem;
-        }
-
-        .featured-item {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 2rem;
-            background-color: var(--pure-white);
-            border: 1px solid rgba(136, 146, 160, 0.12);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: var(--card-shadow);
-            transition: var(--transition);
-        }
-
-        .featured-item:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--card-shadow-hover);
-        }
-
-        .featured-img-wrap {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .featured-img-wrap img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: var(--transition);
-        }
-
-        .featured-item:hover .featured-img-wrap img {
-            transform: scale(1.05);
-        }
-
-        .featured-number {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            background-color: var(--copper);
-            color: var(--pure-white);
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 0.95rem;
-            box-shadow: 0 4px 10px rgba(193, 127, 62, 0.4);
-        }
-
-        .featured-details {
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .featured-header {
-            margin-bottom: 1rem;
-        }
-
-        .featured-header h3 {
-            font-size: 1.25rem;
-            color: var(--primary-navy);
-            margin-bottom: 0.3rem;
-        }
-
-        .featured-header .model-meta {
-            font-size: 0.8rem;
-            color: var(--text-light);
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 500;
-        }
-
-        .featured-bullets {
-            margin-bottom: 1.25rem;
-        }
-
-        .featured-bullets p {
-            font-size: 0.9rem;
-            margin-bottom: 0.4rem;
-            position: relative;
-            padding-left: 1.2rem;
-        }
-
-        .featured-bullets p::before {
-            content: "▪";
-            position: absolute;
-            left: 0;
-            color: var(--copper);
-        }
-
-        .sit-comment {
-            background-color: var(--warm-cream);
-            padding: 1rem;
-            border-radius: 8px;
-            border-left: 3px solid var(--copper);
-            font-size: 0.85rem;
-            color: var(--primary-navy);
-            font-weight: 500;
-        }
-
-        /* RANKING BOARD */
-        .ranking-card-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 1.25rem;
-            margin-top: 1.5rem;
-        }
-
-        .ranking-card {
-            background-color: var(--pure-white);
-            border: 1px solid rgba(136, 146, 160, 0.15);
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            text-align: center;
-            box-shadow: var(--card-shadow);
-            transition: var(--transition);
-        }
-
-        .ranking-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--gold-light);
-        }
-
-        .ranking-badge-icon {
-            font-size: 2.2rem;
-            margin-bottom: 0.75rem;
-            display: block;
-        }
-
-        .ranking-card h3 {
-            font-size: 0.95rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary-navy);
-        }
-
-        .ranking-score {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--copper);
-            margin-bottom: 0.75rem;
-        }
-
-        .criteria-bars {
-            text-align: left;
-            margin-top: 1rem;
-            font-size: 0.75rem;
-        }
-
-        .criteria-item {
-            margin-bottom: 0.4rem;
-        }
-
-        .criteria-label {
-            display: flex;
-            justify-content: space-between;
-            color: var(--text-light);
-            margin-bottom: 0.1rem;
-        }
-
-        .progress-bar-wrap {
-            height: 4px;
-            background-color: rgba(136, 146, 160, 0.2);
-            border-radius: 2px;
-            overflow: hidden;
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            background-color: var(--copper);
-            border-radius: 2px;
-        }
-
-        /* COMPLEMENTARY GRID */
-        .complementary-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-        }
-
-        .comp-card {
-            background-color: var(--pure-white);
-            border: 1px solid rgba(136, 146, 160, 0.15);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: var(--card-shadow);
-            transition: var(--transition);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .comp-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--card-shadow-hover);
-        }
-
-        .comp-img {
-            height: 180px;
-            width: 100%;
-            object-fit: cover;
-        }
-
-        .comp-info {
-            padding: 1.25rem;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .comp-info h4 {
-            font-size: 1rem;
-            color: var(--primary-navy);
-            margin-bottom: 0.5rem;
-        }
-
-        .comp-info p {
-            font-size: 0.85rem;
-            color: var(--text-light);
-            margin-bottom: 1rem;
-        }
-
-        .comp-pricing {
-            border-top: 1px solid rgba(136, 146, 160, 0.15);
-            padding-top: 0.75rem;
-            font-size: 0.8rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .comp-pricing span {
-            font-weight: 500;
-        }
-
-        .comp-pricing strong {
-            color: var(--copper);
-        }
-
-        /* TIMELINE (PRÓXIMOS PASOS) */
-        .timeline-container {
-            display: flex;
-            justify-content: space-between;
-            position: relative;
-            margin-top: 2rem;
-            padding-bottom: 1.5rem;
-        }
-
-        .timeline-container::before {
-            content: '';
-            position: absolute;
-            top: 25px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background-color: var(--warm-cream);
-            z-index: 1;
-        }
-
-        .timeline-step {
-            width: 15%;
-            text-align: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        .timeline-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: var(--pure-white);
-            border: 3px solid var(--warm-cream);
-            color: var(--steel-gray);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.15rem;
-            margin-bottom: 0.75rem;
-            transition: var(--transition);
-        }
-
-        .timeline-step.active .timeline-icon {
-            border-color: var(--copper);
-            background-color: var(--primary-navy);
-            color: var(--gold-light);
-            box-shadow: 0 0 15px rgba(193, 127, 62, 0.3);
-        }
-
-        .timeline-step h4 {
-            font-size: 0.85rem;
-            margin-bottom: 0.25rem;
-            color: var(--text-dark);
-        }
-
-        .timeline-step p {
-            font-size: 0.7rem;
-            color: var(--text-light);
-            line-height: 1.2;
-        }
-
-        /* INTERACTIVE BUDGET SIMULATOR WIDGET */
-        .simulator-widget {
-            background: linear-gradient(135deg, rgba(10, 22, 40, 0.02) 0%, rgba(193, 127, 62, 0.05) 100%);
-            border: 1px dashed var(--copper);
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            margin: 2rem 0;
-        }
-
-        .simulator-inputs {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.4rem;
-        }
-
-        .input-group label {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--primary-navy);
-        }
-
-        body.dark-theme .input-group label {
-            color: var(--pure-white);
-        }
-
-        .input-group input {
-            padding: 0.6rem 1rem;
-            border-radius: 8px;
-            border: 1px solid rgba(136, 146, 160, 0.3);
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1rem;
-            font-weight: 600;
-            outline: none;
-            color: var(--text-dark);
-            background-color: var(--pure-white);
-        }
-
-        .input-group input:focus {
-            border-color: var(--copper);
-        }
-
-        .simulator-results {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-            border-top: 1px solid rgba(136, 146, 160, 0.2);
-            padding-top: 1.5rem;
-        }
-
-        .sim-stat {
-            background-color: var(--pure-white);
-            padding: 1rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
-            text-align: center;
-        }
-
-        .sim-stat span {
-            font-size: 0.75rem;
-            color: var(--text-light);
-            text-transform: uppercase;
-            display: block;
-            margin-bottom: 0.2rem;
-        }
-
-        .sim-stat strong {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: var(--primary-navy);
-        }
-
-        body.dark-theme .sim-stat strong {
-            color: var(--pure-white);
-        }
-
-        .sim-stat.highlight strong {
-            color: var(--copper);
-        }
-
-        .sim-stat.budget-warning strong {
-            color: #dc3545;
-        }
-
-        /* CONTRAPORTADA (Back cover end visual) */
-        .back-cover {
-            background-color: var(--primary-navy);
-            color: var(--pure-white);
-            border-radius: var(--border-radius);
-            padding: 5rem 3rem;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 20px 45px rgba(10, 22, 40, 0.2);
-        }
-
-        .back-cover img {
-            max-width: 250px;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        .back-cover h3 {
-            color: var(--gold-light);
-            font-size: 1.1rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 2.5rem;
-        }
-
-        .back-cover blockquote {
-            max-width: 600px;
-            margin: 0 auto 3rem;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.35rem;
-            font-weight: 500;
-            font-style: italic;
-            color: var(--warm-cream);
-            border-top: 1px solid var(--copper);
-            border-bottom: 1px solid var(--copper);
-            padding: 1.5rem 0;
-        }
-
-        .back-cover p.footer-sub {
-            color: var(--steel-gray);
-            font-size: 0.8rem;
-        }
-
-        /* IMAGE DETAIL MODAL */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(10, 22, 40, 0.85);
-            backdrop-filter: blur(5px);
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
-
-        .modal-content {
-            background-color: var(--pure-white);
-            max-width: 650px;
-            width: 100%;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-            position: relative;
-            animation: modalFadeIn 0.3s ease-out;
-        }
-
-        @keyframes modalFadeIn {
-            from { transform: scale(0.95); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1.25rem;
-            font-size: 1.5rem;
-            color: var(--text-light);
-            cursor: pointer;
-            z-index: 10;
-            transition: var(--transition);
-        }
-
-        .modal-close:hover {
-            color: var(--copper);
-        }
-
-        .modal-img {
-            width: 100%;
-            height: 380px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .modal-details {
-            padding: 2rem;
-        }
-
-        .modal-details h3 {
-            font-size: 1.3rem;
-            color: var(--primary-navy);
-            margin-bottom: 0.5rem;
-        }
-
-        .modal-details p {
-            font-size: 0.9rem;
-            color: var(--text-light);
-            margin-bottom: 1.25rem;
-        }
-
-        .modal-pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            border-top: 1px solid rgba(136, 146, 160, 0.15);
-            padding-top: 1rem;
-        }
-
-        .modal-pricing-grid div {
-            padding: 0.5rem;
-            border-radius: 6px;
-            background-color: var(--bg-light);
-            text-align: center;
-        }
-
-        .modal-pricing-grid span {
-            font-size: 0.75rem;
-            color: var(--text-light);
-            text-transform: uppercase;
-            display: block;
-        }
-
-        .modal-pricing-grid strong {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.1rem;
-            color: var(--primary-navy);
-        }
-
-        /* PRINT STYLES FOR PERFECT PDF RENDERING */
-        @media print {
-            @page {
-                size: letter portrait;
-                margin: 20mm;
-            }
-            @page :first {
-                margin: 0mm;
-            }
-            body {
-                padding: 0 !important;
-                margin: 0 !important;
-                background-color: #ffffff !important;
-                color: #0F172A !important;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-                font-size: 10pt !important;
-            }
-            /* Hide elements not needed in print */
-            .sidebar, 
-            .theme-toggle, 
-            .btn, 
-            .search-box, 
-            .tab-buttons, 
-            .simulator-inputs, 
-            #simCheckboxes,
-            .modal,
-            .main-header {
-                display: none !important;
-            }
-            .main-content {
-                margin-left: 0 !important;
-                padding: 0 !important;
-                width: 100% !important;
-            }
-            section {
-                box-shadow: none !important;
-                border: none !important;
-                padding: 0 !important;
-                margin-bottom: 2.5rem !important;
-                page-break-inside: auto !important;
-                page-break-before: auto !important;
-                background: transparent !important;
-            }
-            section:first-of-type {
-                page-break-before: auto !important;
-            }
-            .section-title {
-                margin-bottom: 1.2rem !important;
-                font-size: 1.5rem !important;
-                color: #0A1628 !important;
-            }
-            .section-title::after {
-                background-color: #C17F3E !important;
-            }
-            /* Covers */
-            .portada-hero {
-                background: #0A1628 !important;
-                color: #ffffff !important;
-                border: none !important;
-                border-radius: 0 !important;
-                padding: 12mm 15mm !important;
-                margin: 0 !important;
-                width: 100% !important;
-                height: 279mm !important;
-                max-height: 279mm !important;
-                overflow: hidden !important;
-                page-break-before: avoid !important;
-                page-break-after: always !important;
-                page-break-inside: avoid !important;
-                break-inside: avoid !important;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                box-sizing: border-box !important;
-            }
-            .portada-hero::before {
-                display: none !important;
-            }
-            .portada-badge {
-                margin-bottom: 0.8rem !important;
-            }
-            .portada-hero h1 {
-                color: #ffffff !important;
-                font-size: 1.6rem !important;
-                margin-bottom: 0.5rem !important;
-                line-height: 1.2 !important;
-            }
-            .portada-hero p.subtitle {
-                color: #DBA04E !important;
-                margin-bottom: 1rem !important;
-                font-size: 1rem !important;
-            }
-            .cover-collage {
-                max-width: 480px !important;
-                margin: 0 auto 1rem !important;
-                gap: 0.8rem !important;
-            }
-            .collage-card img {
-                height: 115px !important;
-            }
-            .collage-card .caption {
-                padding: 0.4rem !important;
-                font-size: 0.65rem !important;
-            }
-            .cover-meta {
-                background: rgba(255, 255, 255, 0.05) !important;
-                display: flex !important;
-                flex-direction: row !important;
-                justify-content: space-around !important;
-                flex-wrap: nowrap !important;
-                gap: 1rem !important;
-                padding: 0.8rem 1.5rem !important;
-                margin-top: 1rem !important;
-                page-break-inside: avoid !important;
-                break-inside: avoid !important;
-                max-width: 550px !important;
-            }
-            .back-cover {
-                background: #0A1628 !important;
-                color: #ffffff !important;
-                padding: 3rem !important;
-                min-height: auto !important;
-                page-break-inside: auto !important;
-            page-break-before: auto !important;
-                page-break-after: avoid !important;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                box-sizing: border-box;
-            }
-            .back-cover h3, .back-cover blockquote {
-                color: #ffffff !important;
-            }
-            .back-cover blockquote {
-                border-color: #C17F3E !important;
-                color: #F5F0E8 !important;
-            }
-            /* Tables */
-            .table-responsive {
-                overflow: visible !important;
-                border: none !important;
-            }
-            table {
-                width: 100% !important;
-                border-collapse: collapse !important;
-                page-break-inside: auto !important;
-            }
-            thead {
-                display: table-header-group !important;
-            }
-            tr {
-                page-break-inside: avoid !important;
-                page-break-after: auto !important;
-            }
-            th {
-                background-color: #0A1628 !important;
-                color: #ffffff !important;
-                padding: 8pt 10pt !important;
-                font-size: 8.5pt !important;
-            }
-            td {
-                padding: 8pt 10pt !important;
-                border-bottom: 1px solid #D3D3D3 !important;
-                background-color: transparent !important;
-                font-size: 8.5pt !important;
-            }
-            tr:nth-child(even) td {
-                background-color: #F9F7F5 !important;
-            }
-            .product-thumb {
-                width: 45px !important;
-                height: 45px !important;
-            }
-            /* Simulator results card in print */
-            .simulator-widget {
-                background: #F9F7F5 !important;
-                border: 1px solid #C17F3E !important;
-                padding: 1.5rem !important;
-                margin: 1.5rem 0 !important;
-                page-break-inside: avoid !important;
-            }
-            .simulator-results {
-                grid-template-columns: repeat(4, 1fr) !important;
-                gap: 0.5rem !important;
-                padding-top: 1rem !important;
-            }
-            .sim-stat {
-                background: #ffffff !important;
-                border: 1px solid #D3D3D3 !important;
-                padding: 0.5rem !important;
-            }
-            .sim-stat strong {
-                font-size: 10.5pt !important;
-            }
-            /* Featured models */
-            .featured-grid {
-                gap: 1.5rem !important;
-            }
-            .featured-item {
-                grid-template-columns: 140px 1fr !important;
-                gap: 1.5rem !important;
-                page-break-inside: avoid !important;
-                border: 1px solid #D3D3D3 !important;
-                background: #ffffff !important;
-            }
-            .featured-img-wrap {
-                height: 190px !important;
-            }
-            .featured-details {
-                padding: 1rem 1.5rem !important;
-            }
-            .featured-header h3 {
-                font-size: 1.1rem !important;
-            }
-            .featured-bullets p {
-                font-size: 8.5pt !important;
-            }
-            .sit-comment {
-                background-color: #F5F0E8 !important;
-                padding: 0.6rem !important;
-                font-size: 8pt !important;
-            }
-            /* Ranking grid */
-            .ranking-card-grid {
-                grid-template-columns: repeat(5, 1fr) !important;
-                gap: 0.5rem !important;
-            }
-            .ranking-card {
-                padding: 0.8rem !important;
-                box-shadow: none !important;
-                border: 1px solid #D3D3D3 !important;
-                page-break-inside: avoid !important;
-            }
-            .ranking-score {
-                font-size: 11pt !important;
-            }
-            .ranking-badge-icon {
-                font-size: 1.5rem !important;
-            }
-            /* Complementary grid */
-            .complementary-grid {
-                grid-template-columns: repeat(3, 1fr) !important;
-                gap: 1rem !important;
-            }
-            .comp-card {
-                box-shadow: none !important;
-                border: 1px solid #D3D3D3 !important;
-                page-break-inside: avoid !important;
-            }
-            .comp-img {
-                height: 120px !important;
-            }
-            .comp-info {
-                padding: 0.8rem !important;
-            }
-            .comp-info h4 {
-                font-size: 0.85rem !important;
-            }
-            .comp-info p {
-                font-size: 8pt !important;
-                margin-bottom: 0.5rem !important;
-            }
-            /* Stepper timeline */
-            .timeline-container {
-                flex-direction: row !important;
-                gap: 0 !important;
-                padding-left: 0 !important;
-                margin-top: 1rem !important;
-            }
-            .timeline-container::before {
-                top: 18px !important;
-                height: 2px !important;
-                background-color: #D3D3D3 !important;
-            }
-            .timeline-step {
-                width: 16% !important;
-            }
-            .timeline-icon {
-                width: 36px !important;
-                height: 36px !important;
-                font-size: 0.9rem !important;
-                border-width: 2px !important;
-            }
-            .timeline-step h4 {
-                font-size: 7.5pt !important;
-            }
-            .timeline-step p {
-                font-size: 6.5pt !important;
-            }
-            /* Presentation letter and signatures */
-            .signature-block {
-                margin-top: 1.5rem !important;
-                page-break-inside: avoid !important;
-            }
-        }
-
-        /* HTML2PDF MODE PRINT EMULATION */
-        .html2pdf-mode {
-            background-color: #ffffff !important;
-            color: #0F172A !important;
-            font-size: 10pt !important;
-        }
-        .html2pdf-mode .sidebar, 
-        .html2pdf-mode .theme-toggle, 
-        .html2pdf-mode .header-actions,
-        .html2pdf-mode .search-box, 
-        .html2pdf-mode .tab-buttons, 
-        .html2pdf-mode .simulator-inputs, 
-        .html2pdf-mode #simCheckboxes,
-        .html2pdf-mode .modal,
-        .html2pdf-mode .main-header {
-            display: none !important;
-        }
-        .html2pdf-mode .app-container {
-            display: block !important;
-            min-height: auto !important;
-            background: #ffffff !important;
-        }
-        .html2pdf-mode .main-content {
-            margin-left: 0 !important;
-            padding: 0 !important;
-            width: 100% !important;
-        }
-        .html2pdf-mode section {
-            box-shadow: none !important;
-            border: none !important;
-            padding: 0 !important;
-            margin-bottom: 2.5rem !important;
-            page-break-inside: auto !important;
-            page-break-before: auto !important;
-            background: transparent !important;
-        }
-        .html2pdf-mode section:first-of-type {
-            page-break-before: auto !important;
-        }
-        .html2pdf-mode .section-title {
-            margin-bottom: 1.2rem !important;
-            font-size: 1.5rem !important;
-            color: #0A1628 !important;
-        }
-        .html2pdf-mode .section-title::after {
-            background-color: #C17F3E !important;
-        }
-        .html2pdf-mode .portada-hero {
-            background: #0A1628 !important;
-            color: #ffffff !important;
-            border: none !important;
-            border-radius: 0 !important;
-            padding: 12mm 15mm !important;
-            margin: 0 !important;
-            width: 100% !important;
-            height: 279mm !important;
-            max-height: 279mm !important;
-            overflow: hidden !important;
-            page-break-before: avoid !important;
-            page-break-after: always !important;
-            page-break-inside: avoid !important;
-            break-inside: avoid !important;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            box-sizing: border-box !important;
-        }
-        .html2pdf-mode .portada-hero::before {
-            display: none !important;
-        }
-        .html2pdf-mode .portada-badge {
-            margin-bottom: 0.8rem !important;
-        }
-        .html2pdf-mode .portada-hero h1 {
-            color: #ffffff !important;
-            font-size: 1.6rem !important;
-            margin-bottom: 0.5rem !important;
-            line-height: 1.2 !important;
-        }
-        .html2pdf-mode .portada-hero p.subtitle {
-            color: #DBA04E !important;
-            margin-bottom: 1rem !important;
-            font-size: 1rem !important;
-        }
-        .html2pdf-mode .cover-collage {
-            max-width: 480px !important;
-            margin: 0 auto 1rem !important;
-            gap: 0.8rem !important;
-        }
-        .html2pdf-mode .collage-card img {
-            height: 115px !important;
-        }
-        .html2pdf-mode .collage-card .caption {
-            padding: 0.4rem !important;
-            font-size: 0.65rem !important;
-        }
-        .html2pdf-mode .cover-meta {
-            background: rgba(255, 255, 255, 0.05) !important;
-            display: flex !important;
-            flex-direction: row !important;
-            justify-content: space-around !important;
-            flex-wrap: nowrap !important;
-            gap: 1rem !important;
-            padding: 0.8rem 1.5rem !important;
-            margin-top: 1rem !important;
-            page-break-inside: avoid !important;
-            break-inside: avoid !important;
-            max-width: 550px !important;
-        }
-        .html2pdf-mode .back-cover {
-            background: #0A1628 !important;
-            color: #ffffff !important;
-            padding: 3rem !important;
-            min-height: auto !important;
-            page-break-inside: auto !important;
-            page-break-before: auto !important;
-            page-break-after: avoid !important;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            box-sizing: border-box;
-        }
-        .html2pdf-mode .back-cover h3, 
-        .html2pdf-mode .back-cover blockquote {
-            color: #ffffff !important;
-        }
-        .html2pdf-mode .back-cover blockquote {
-            border-color: #C17F3E !important;
-            color: #F5F0E8 !important;
-        }
-        .html2pdf-mode .table-responsive {
-            overflow: visible !important;
-            border: none !important;
-        }
-        .html2pdf-mode table {
-            width: 100% !important;
-            border-collapse: collapse !important;
-            page-break-inside: auto !important;
-        }
-        .html2pdf-mode tr {
-            page-break-inside: avoid !important;
-            page-break-after: auto !important;
-        }
-        .html2pdf-mode th {
-            background-color: #0A1628 !important;
-            color: #ffffff !important;
-            padding: 8pt 10pt !important;
-            font-size: 8.5pt !important;
-        }
-        .html2pdf-mode td {
-            padding: 8pt 10pt !important;
-            border-bottom: 1px solid #D3D3D3 !important;
-            background-color: transparent !important;
-            font-size: 8.5pt !important;
-        }
-        .html2pdf-mode tr:nth-child(even) td {
-            background-color: #F9F7F5 !important;
-        }
-        .html2pdf-mode .product-thumb {
-            width: 45px !important;
-            height: 45px !important;
-        }
-        .html2pdf-mode .simulator-widget {
-            background: #F9F7F5 !important;
-            border: 1px solid #C17F3E !important;
-            padding: 1.5rem !important;
-            margin: 1.5rem 0 !important;
-            page-break-inside: avoid !important;
-        }
-        .html2pdf-mode .simulator-results {
-            grid-template-columns: repeat(4, 1fr) !important;
-            gap: 0.5rem !important;
-            padding-top: 1rem !important;
-        }
-        .html2pdf-mode .sim-stat {
-            background: #ffffff !important;
-            border: 1px solid #D3D3D3 !important;
-            padding: 0.5rem !important;
-        }
-        .html2pdf-mode .sim-stat strong {
-            font-size: 10.5pt !important;
-        }
-        .html2pdf-mode .featured-grid {
-            gap: 1.5rem !important;
-        }
-        .html2pdf-mode .featured-item {
-            grid-template-columns: 140px 1fr !important;
-            gap: 1.5rem !important;
-            page-break-inside: avoid !important;
-            border: 1px solid #D3D3D3 !important;
-            background: #ffffff !important;
-        }
-        .html2pdf-mode .featured-img-wrap {
-            height: 190px !important;
-        }
-        .html2pdf-mode .featured-details {
-            padding: 1rem 1.5rem !important;
-        }
-        .html2pdf-mode .featured-header h3 {
-            font-size: 1.1rem !important;
-        }
-        .html2pdf-mode .featured-bullets p {
-            font-size: 8.5pt !important;
-        }
-        .html2pdf-mode .sit-comment {
-            background-color: #F5F0E8 !important;
-            padding: 0.6rem !important;
-            font-size: 8pt !important;
-        }
-        .html2pdf-mode .ranking-card-grid {
-            grid-template-columns: repeat(5, 1fr) !important;
-            gap: 0.5rem !important;
-        }
-        .html2pdf-mode .ranking-card {
-            padding: 0.8rem !important;
-            box-shadow: none !important;
-            border: 1px solid #D3D3D3 !important;
-            page-break-inside: avoid !important;
-        }
-        .html2pdf-mode .ranking-score {
-            font-size: 11pt !important;
-        }
-        .html2pdf-mode .ranking-badge-icon {
-            font-size: 1.5rem !important;
-        }
-        .html2pdf-mode .complementary-grid {
-            grid-template-columns: repeat(3, 1fr) !important;
-            gap: 1rem !important;
-        }
-        .html2pdf-mode .comp-card {
-            box-shadow: none !important;
-            border: 1px solid #D3D3D3 !important;
-            page-break-inside: avoid !important;
-        }
-        .html2pdf-mode .comp-img {
-            height: 120px !important;
-        }
-        .html2pdf-mode .comp-info {
-            padding: 0.8rem !important;
-        }
-        .html2pdf-mode .comp-info h4 {
-            font-size: 0.85rem !important;
-        }
-        .html2pdf-mode .comp-info p {
-            font-size: 8pt !important;
-            margin-bottom: 0.5rem !important;
-        }
-        .html2pdf-mode .timeline-container {
-            flex-direction: row !important;
-            gap: 0 !important;
-            padding-left: 0 !important;
-            margin-top: 1rem !important;
-        }
-        .html2pdf-mode .timeline-container::before {
-            top: 18px !important;
-            height: 2px !important;
-            background-color: #D3D3D3 !important;
-        }
-        .html2pdf-mode .timeline-step {
-            width: 16% !important;
-        }
-        .html2pdf-mode .timeline-icon {
-            width: 36px !important;
-            height: 36px !important;
-            font-size: 0.9rem !important;
-            border-width: 2px !important;
-        }
-        .html2pdf-mode .timeline-step h4 {
-            font-size: 7.5pt !important;
-        }
-        .html2pdf-mode .timeline-step p {
-            font-size: 6.5pt !important;
-        }
-        .html2pdf-mode .signature-block {
-            margin-top: 1.5rem !important;
-            page-break-inside: avoid !important;
-        }
-
-        /* RESPONSIVE MEDIA QUERIES */
-        @media (max-width: 1024px) {
-            .app-container {
-                flex-direction: column;
-            }
-            .sidebar {
-                width: 100%;
-                position: relative;
-                padding: 1.5rem;
-                height: auto;
-            }
-            .sidebar-logo {
-                margin-bottom: 1rem;
-                padding-bottom: 1rem;
-            }
-            .project-info, .sidebar-footer {
-                display: none;
-            }
-            .sidebar-menu {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 0.5rem;
-                max-height: 120px;
-            }
-            .sidebar-menu li {
-                margin-bottom: 0;
-            }
-            .main-content {
-                margin-left: 0;
-                padding: 2rem 1.5rem;
-                width: 100%;
-            }
-            .compare-tiles {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-            .ranking-card-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            .complementary-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .cover-collage {
-                grid-template-columns: 1fr;
-            }
-            .cover-meta {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            .featured-item {
-                grid-template-columns: 1fr;
-            }
-            .featured-img-wrap {
-                height: 250px;
-            }
-            .ranking-card-grid {
-                grid-template-columns: 1fr;
-            }
-            .timeline-container {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1.5rem;
-                padding-left: 1.5rem;
-            }
-            .timeline-container::before {
-                top: 0;
-                bottom: 0;
-                left: 25px;
-                width: 3px;
-                height: 100%;
-            }
-            .timeline-step {
-                width: 100%;
-                display: flex;
-                align-items: center;
-                gap: 1rem;
-                text-align: left;
-            }
-            .timeline-icon {
-                margin-bottom: 0;
-            }
-            .simulator-inputs {
-                grid-template-columns: 1fr;
-            }
-            .simulator-results {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            /* Responsive tables for mobile */
-            .table-responsive {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
-                margin-bottom: 1rem;
-            }
-            .table-responsive table {
-                min-width: 700px; /* Force table to maintain width so container scrolls */
-            }
-            .table-responsive th, .table-responsive td {
-                white-space: normal;
-            }
-        }
-
-        /* --- EXECUTIVE DASHBOARD CSS --- */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin: 2.5rem 0;
-        }
-        .dashboard-card {
-            background-color: var(--pure-white);
-            border: 1px solid rgba(136, 146, 160, 0.15);
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            box-shadow: var(--card-shadow);
-            text-align: center;
-            transition: var(--transition);
-        }
-        .dashboard-card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--card-shadow-hover);
-        }
-        .dashboard-card .value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary-navy);
-            margin-bottom: 0.3rem;
-            font-family: 'Montserrat', sans-serif;
-        }
-        .dashboard-card .label {
-            font-size: 0.8rem;
-            color: var(--text-light);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 600;
-        }
-        .dashboard-card.highlight-card {
-            border: 1.5px solid var(--copper);
-        }
-        .dashboard-card.highlight-card .value {
-            color: var(--copper);
-        }
-        body.dark-theme .dashboard-card .value {
-            color: var(--gold-light);
-        }
-
-        /* --- ALCANCE DEL SERVICIO CSS --- */
-        .alcance-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-            margin-top: 1.5rem;
-        }
-        .alcance-card {
-            background-color: var(--pure-white);
-            border: 1px solid rgba(136, 146, 160, 0.15);
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            box-shadow: var(--card-shadow);
-        }
-        .alcance-card.incluye {
-            border-left: 5px solid var(--copper);
-        }
-        .alcance-card.excluye {
-            border-left: 5px solid var(--steel-gray);
-        }
-        .alcance-card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-        }
-        .alcance-card.incluye h3 {
-            color: var(--copper);
-        }
-        .alcance-card.excluye h3 {
-            color: var(--steel-gray);
-        }
-        .alcance-list {
-            list-style: none;
-            padding: 0;
-        }
-        .alcance-list li {
-            margin-bottom: 0.8rem;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 0.5rem;
-        }
-        .alcance-list li strong {
-            font-size: 1.1rem;
-        }
-        .alcance-list li.incluye-item strong {
-            color: var(--copper);
-        }
-        .alcance-list li.excluye-item strong {
-            color: var(--steel-gray);
-        }
-
-        /* --- ESCENARIO DE COMPRA PILOTO RECOMENDADO CSS --- */
-        .pilot-strategy-card {
-            background: linear-gradient(135deg, rgba(10, 22, 40, 0.03) 0%, rgba(193, 127, 62, 0.06) 100%);
-            border: 2px solid var(--copper);
-            border-radius: var(--border-radius);
-            padding: 2.5rem;
-            margin: 2.5rem 0;
-            position: relative;
-            box-shadow: var(--card-shadow-hover);
-        }
-        .pilot-strategy-card h3 {
-            color: var(--primary-navy);
-            font-size: 1.4rem;
-            margin-bottom: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .pilot-strategy-card h3::after {
-            content: "";
-            flex-grow: 1;
-            height: 1px;
-            background-color: rgba(193, 127, 62, 0.25);
-            margin-left: 1rem;
-        }
-        .pilot-strategy-card .objectives-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-        .pilot-strategy-card .objective-item {
-            background-color: var(--pure-white);
-            border: 1px solid rgba(136, 146, 160, 0.12);
-            padding: 1rem 1.25rem;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            font-weight: 500;
-        }
-        .pilot-strategy-card .objective-item i {
-            color: var(--copper);
-            font-size: 1.1rem;
-        }
-        body.dark-theme .pilot-strategy-card h3 {
-            color: var(--gold-light);
-        }
-
-        /* --- RIESGOS Y CONSIDERACIONES CSS --- */
-        .risk-section {
-            background-color: var(--pure-white);
-            border: 1px solid rgba(136, 146, 160, 0.15);
-            border-radius: var(--border-radius);
-            padding: 2.5rem;
-            margin-bottom: 2.5rem;
-            box-shadow: var(--card-shadow);
-        }
-        .risk-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-        .risk-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            font-size: 0.95rem;
-        }
-        .risk-item i {
-            color: var(--copper);
-            margin-top: 0.25rem;
-            font-size: 1rem;
-        }
-        .risk-item-text strong {
-            display: block;
-            color: var(--primary-navy);
-            margin-bottom: 0.2rem;
-        }
-        body.dark-theme .risk-item-text strong {
-            color: var(--gold-light);
-        }
-        .risk-obs {
-            background-color: rgba(219, 160, 78, 0.08);
-            border-left: 4px solid var(--gold-light);
-            padding: 1.25rem 1.5rem;
-            border-radius: 0 var(--border-radius) var(--border-radius) 0;
-            margin-top: 2rem;
-            font-size: 0.95rem;
-            display: flex;
-            gap: 0.75rem;
-            align-items: flex-start;
-        }
-        .risk-obs i {
-            color: var(--gold-light);
-            font-size: 1.25rem;
-            margin-top: 0.1rem;
-        }
-
-        /* --- SELLO OFICIAL DE RECOMENDACIÓN CSS --- */
-        .recommendation-seal-card {
-            background-color: #0A1628;
-            border: 2px solid var(--copper);
+        /* Tablas oscuras */
+        .table-dark-premium table {
+            background: var(--navy-light);
             color: #FFFFFF;
-            padding: 2.5rem;
-            border-radius: var(--border-radius);
-            margin: 2.5rem 0;
-            box-shadow: 0 15px 35px rgba(10, 22, 40, 0.25);
-            position: relative;
-            overflow: hidden;
         }
-        .recommendation-seal-card::before {
-            content: "";
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(193, 127, 62, 0.15) 0%, transparent 70%);
-            pointer-events: none;
-        }
-        .recommendation-seal-card h3 {
-            color: var(--gold-light);
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            border-bottom: 1px solid rgba(193, 127, 62, 0.3);
-            padding-bottom: 1rem;
-            font-family: 'Montserrat', sans-serif;
+
+        .table-dark-premium th {
+            background: var(--navy-dark);
+            color: var(--copper-light);
             font-weight: 600;
+            font-size: .75rem;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
         }
-        .seal-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
+
+        .table-dark-premium td {
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: rgba(255,255,255,0.9);
         }
-        .seal-rating-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.95rem;
-            border-bottom: 1px solid rgba(136, 146, 160, 0.1);
-            padding-bottom: 0.5rem;
+
+        .table-dark-premium tr:last-child td {
+            border-bottom: none;
         }
-        .seal-rating-label {
-            color: #E6EDF8;
-            font-weight: 500;
+
+        .table-dark-premium .text-explain {
+            color: #94A3B8 !important;
+            font-size: .78rem;
+            font-weight: 400;
+            margin-top: 4px;
+            display: block;
         }
-        .seal-rating-stars {
-            color: var(--gold-light);
+
+        /* Tablas claras */
+        .table-light-premium table {
+            background: var(--cream);
+            color: var(--navy-dark);
+        }
+
+        .table-light-premium th {
+            background: rgba(193, 127, 62, 0.1);
+            color: var(--navy-dark);
+            font-weight: 600;
+            font-size: .75rem;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            border-bottom: 2px solid var(--copper);
+        }
+
+        .table-light-premium td {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* DISEÑO EXCLUSIVO PARA LA TABLA DE PRECIOS - FUENTE REDUCIDA 1 PUNTO */
+        .precios-table td, .precios-table th {
+            font-size: 0.8rem !important;
+            padding: 14px 16px;
+        }
+
+        .bg-total-dark { background: var(--navy-dark); }
+        .bg-recommend { background: rgba(193, 127, 62, 0.05); }
+
+        /* ALERTAS */
+        .alert-box {
+            background: var(--cream);
+            border-left: 6px solid var(--copper);
+            border-radius: 8px;
+            padding: 24px;
+            margin: 30px 0;
+            border-top: 1px solid var(--copper-light);
+            border-right: 1px solid var(--copper-light);
+            border-bottom: 1px solid var(--copper-light);
+        }
+
+        .alert-box h4 {
+            font-family: var(--font-display);
             font-size: 1.1rem;
-        }
-        .seal-comment-box {
-            background-color: rgba(193, 127, 62, 0.1);
-            border-left: 3px solid var(--copper);
-            padding: 1rem 1.25rem;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            color: #F5F0E8;
-            line-height: 1.5;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--copper);
+            margin-bottom: 10px;
+            letter-spacing: .05em;
         }
 
-        /* --- RESPONSIVE MEDIA QUERIES FOR NEW SECTIONS --- */
-        @media (max-width: 768px) {
-            .dashboard-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .alcance-grid {
-                grid-template-columns: 1fr;
-            }
-            .pilot-strategy-card .objectives-grid {
-                grid-template-columns: 1fr;
-            }
-            .risk-grid {
-                grid-template-columns: 1fr;
-            }
-            .seal-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        @media (max-width: 480px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
+        .alert-box.success {
+            background: var(--success-bg);
+            border-left-color: var(--success-text);
+            border-top-color: #E2F0D9;
+            border-right-color: #E2F0D9;
+            border-bottom-color: #E2F0D9;
         }
 
-        /* --- PRINT EMULATION RULES FOR NEW SECTIONS --- */
-        .html2pdf-mode .dashboard-grid {
-            grid-template-columns: repeat(3, 1fr) !important;
-            gap: 0.5rem !important;
-            margin: 1.5rem 0 !important;
-        }
-        .html2pdf-mode .dashboard-card {
-            padding: 0.8rem !important;
-            box-shadow: none !important;
-            border: 1px solid #D3D3D3 !important;
-            background: #ffffff !important;
-        }
-        .html2pdf-mode .dashboard-card .value {
-            font-size: 1.3rem !important;
-        }
-        .html2pdf-mode .dashboard-card .label {
-            font-size: 0.7rem !important;
-        }
-        .html2pdf-mode .alcance-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-            gap: 1rem !important;
-        }
-        .html2pdf-mode .alcance-card {
-            padding: 1rem !important;
-            box-shadow: none !important;
-            border: 1px solid #D3D3D3 !important;
-            background: #ffffff !important;
-        }
-        .html2pdf-mode .alcance-card.incluye {
-            border-left: 4px solid var(--copper) !important;
-        }
-        .html2pdf-mode .alcance-card.excluye {
-            border-left: 4px solid var(--steel-gray) !important;
-        }
-        .html2pdf-mode .pilot-strategy-card {
-            padding: 1.5rem !important;
-            box-shadow: none !important;
-            background: #F9F7F5 !important;
-            border: 1.5px solid var(--copper) !important;
-            page-break-inside: avoid !important;
-        }
-        .html2pdf-mode .pilot-strategy-card .objectives-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-            gap: 0.75rem !important;
-        }
-        .html2pdf-mode .pilot-strategy-card .objective-item {
-            padding: 0.6rem !important;
-            box-shadow: none !important;
-            border: 1px solid #D3D3D3 !important;
-            background: #ffffff !important;
-        }
-        .html2pdf-mode .risk-section {
-            padding: 1.5rem !important;
-            box-shadow: none !important;
-            border: 1px solid #D3D3D3 !important;
-            background: #ffffff !important;
-            page-break-inside: avoid !important;
-        }
-        .html2pdf-mode .risk-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-            gap: 0.75rem !important;
-        }
-        .html2pdf-mode .recommendation-seal-card {
-            padding: 1.5rem !important;
-            box-shadow: none !important;
-            border: 2px solid var(--copper) !important;
-            background-color: #0A1628 !important;
-            color: #FFFFFF !important;
-            page-break-inside: avoid !important;
-        }
-        .html2pdf-mode .seal-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-            gap: 1rem !important;
-        }
-        /* OVERRIDE GENERIC SECTION FOR DASHBOARD */
-        section#dashboard {
-            background-color: transparent !important;
-            padding: 0 !important;
-            box-shadow: none !important;
-            border: none !important;
-            margin-bottom: 3rem !important;
-        }
-        section#dashboard:hover {
-            box-shadow: none !important;
-            border-color: transparent !important;
-        }
-        .html2pdf-mode section#dashboard {
-            background-color: transparent !important;
-            padding: 0 !important;
-            box-shadow: none !important;
-            border: none !important;
-        }
+        .alert-box.success h4 { color: var(--success-text); }
+        ul, ol { margin-left: 20px; margin-bottom: 20px; color: #475569; font-size: .95rem; }
+        li { margin-bottom: 8px; }
 
-        /* AVOID ORPHANED TITLES AND INTROS */
-        @media print {
-            /* Keep headings with their immediate content safely */
-            h1, h2, h3, h4, .section-title {
-                page-break-after: avoid !important;
-                break-after: avoid !important;
-                page-break-inside: avoid !important;
-            }
-            
-            /* SMALLER BLOCKS THAT SHOULD NOT SPLIT (avoid blank spaces by allowing sections to flow) */
-            .callout-box, .simulator-widget, .featured-item, .alcance-card, .risk-item, .risk-obs, .objective-item {
-                page-break-inside: avoid !important;
-                break-inside: avoid !important;
-            }
-
-            /* EXPLICIT PAGE BREAKS ONLY WHERE ABSOLUTELY NECESSARY */
-            #opcion1,
-            #carta,
-            #contraportada {
-                page-break-before: always !important;
-            }
-
-            /* Let sections flow naturally to fill empty space */
-            section {
-                page-break-inside: auto !important;
-                break-inside: auto !important;
-                page-break-before: auto !important;
-            }
-
-            /* Improve visual separation without forcing page breaks */
-            #validacion, #cronograma {
-                margin-top: 3rem !important;
-                margin-bottom: 2rem !important;
-            }
-
-            tr {
-                page-break-inside: avoid !important;
-            }
-        }
-
-
-        /* PRINT & PDF LAYOUT HARMONIZATION OVERRIDES */
-        .html2pdf-mode .cover-collage {
-            display: grid !important;
-            grid-template-columns: repeat(3, 1fr) !important;
-            gap: 0.8rem !important;
-            max-width: 480px !important;
-            margin: 0 auto 1rem !important;
-        }
+        .text-right { text-align: right; }
+        .text-center { text-align: center; }
+        .bold { font-weight: 600; }
+        .text-copper { color: var(--copper); }
+        .text-copper-light { color: var(--copper-light); }
+        .text-gray { color: var(--gray-text); }
+        .text-success { color: var(--success-text); }
         
-        @media print {
-            .cover-collage {
-                display: grid !important;
-                grid-template-columns: repeat(3, 1fr) !important;
-                gap: 0.8rem !important;
-                max-width: 480px !important;
-                margin: 0 auto 1rem !important;
-            }
-            .dashboard-grid {
-                grid-template-columns: repeat(3, 1fr) !important;
-                gap: 0.5rem !important;
-                margin: 1.5rem 0 !important;
-            }
-            .dashboard-card {
-                padding: 0.8rem !important;
-                box-shadow: none !important;
-                border: 1px solid #D3D3D3 !important;
-                background: #ffffff !important;
-            }
-            .dashboard-card .value {
-                font-size: 1.3rem !important;
-            }
-            .dashboard-card .label {
-                font-size: 0.7rem !important;
-            }
-            .alcance-grid {
-                grid-template-columns: repeat(2, 1fr) !important;
-                gap: 1rem !important;
-            }
-            .alcance-card {
-                padding: 1rem !important;
-                box-shadow: none !important;
-                border: 1px solid #D3D3D3 !important;
-                background: #ffffff !important;
-            }
-            .alcance-card.incluye {
-                border-left: 4px solid var(--copper) !important;
-            }
-            .alcance-card.excluye {
-                border-left: 4px solid var(--steel-gray) !important;
-            }
-            .pilot-strategy-card {
-                padding: 1.5rem !important;
-                box-shadow: none !important;
-                background: #F9F7F5 !important;
-                border: 1.5px solid var(--copper) !important;
-                page-break-inside: avoid !important;
-            }
-            .pilot-strategy-card .objectives-grid {
-                grid-template-columns: repeat(2, 1fr) !important;
-                gap: 0.75rem !important;
-            }
-            .pilot-strategy-card .objective-item {
-                padding: 0.6rem !important;
-                box-shadow: none !important;
-                border: 1px solid #D3D3D3 !important;
-                background: #ffffff !important;
-            }
-            .risk-section {
-                padding: 1.5rem !important;
-                box-shadow: none !important;
-                border: 1px solid #D3D3D3 !important;
-                background: #ffffff !important;
-                page-break-inside: avoid !important;
-            }
-            .risk-grid {
-                grid-template-columns: repeat(2, 1fr) !important;
-                gap: 0.75rem !important;
-            }
-            .recommendation-seal-card {
-                padding: 1.5rem !important;
-                box-shadow: none !important;
-                border: 2px solid var(--copper) !important;
-                background-color: #0A1628 !important;
-                color: #FFFFFF !important;
-                page-break-inside: avoid !important;
-            }
-            .seal-grid {
-                grid-template-columns: repeat(2, 1fr) !important;
-                gap: 1rem !important;
-            }
-            .ranking-card-grid {
-                grid-template-columns: repeat(5, 1fr) !important;
-                gap: 0.5rem !important;
-            }
-            .ranking-card {
-                padding: 0.8rem !important;
-                box-shadow: none !important;
-                border: 1px solid #D3D3D3 !important;
-                page-break-inside: avoid !important;
-            }
-            .ranking-score {
-                font-size: 11pt !important;
-            }
-            .ranking-badge-icon {
-                font-size: 1.5rem !important;
-            }
-            .complementary-grid {
-                grid-template-columns: repeat(3, 1fr) !important;
-                gap: 1rem !important;
-            }
-            .comp-card {
-                box-shadow: none !important;
-                border: 1px solid #D3D3D3 !important;
-                page-break-inside: avoid !important;
-            }
-            .comp-img {
-                height: 120px !important;
-            }
-            .comp-info {
-                padding: 0.8rem !important;
-            }
-            .comp-info h4 {
-                font-size: 0.85rem !important;
-            }
-            .comp-info p {
-                font-size: 8pt !important;
-                margin-bottom: 0.5rem !important;
-            }
+        @media (max-width: 1150px) {
+            .sidebar { width: 280px; padding: 30px 20px; }
+            .main-content { margin-left: 280px; padding: 40px 30px; }
+            .meta-grid { grid-template-columns: repeat(2, 1fr); }
+            .product-gallery { grid-template-columns: 1fr; }
         }
-
-        /* PREVENT GRIDS SPLITTING VERTICALLY ACROSS PAGES */
-        .html2pdf-mode .dashboard-grid,
-        .html2pdf-mode .alcance-grid,
-        .html2pdf-mode .pilot-strategy-card .objectives-grid,
-        .html2pdf-mode .risk-grid,
-        .html2pdf-mode .seal-grid,
-        .html2pdf-mode .ranking-card-grid,
-        .html2pdf-mode .complementary-grid,
-        .html2pdf-mode .timeline-container,
-        .html2pdf-mode .signature-block {
-            page-break-inside: avoid !important;
-        }
-
-        @media print {
-            .dashboard-grid,
-            .alcance-grid,
-            .pilot-strategy-card .objectives-grid,
-            .risk-grid,
-            .seal-grid,
-            .ranking-card-grid,
-            .complementary-grid,
-            .timeline-container,
-            .signature-block {
-                page-break-inside: avoid !important;
-            }
-        }
-
     </style>
-
-
 </head>
 <body>
 
-<div class="app-container">
-    
-    <!-- SIDEBAR NAVIGATION -->
+    <!-- BARRA LATERAL FIXED -->
     <aside class="sidebar">
-        <div class="sidebar-logo">
-            <img src="LOGO1 400x83 (1).png" alt="Smart Import Trade Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-            <span class="fallback-logo" style="display:none;">SMART IMPORT TRADE</span>
+        <div class="sidebar-top">
+            <div class="sidebar-brand">
+                <img src="LOGO1 400x83 (1).png" alt="Smart Import Logo" class="brand-logo-img">
+            </div>
+            
+            <nav style="margin-top: 30px;">
+                <ul class="nav-menu" id="sidebar-menu">
+                    <li class="nav-item active" data-sec="resumen"><a href="#resumen">01. Resumen Ejecutivo</a></li>
+                    <li class="nav-item" data-sec="costos"><a href="#costos">02. Ventaja de Costos</a></li>
+                    <li class="nav-item" data-sec="proforma"><a href="#proforma">03. Proforma Comercial</a></li>
+                    <li class="nav-item" data-sec="costeo"><a href="#costeo">04. Matriz de Costeo</a></li>
+                    <li class="nav-item" data-sec="precios"><a href="#precios">05. Proyección de Precios</a></li>
+                    <li class="nav-item" data-sec="fiscal"><a href="#fiscal">06. Recuperación Fiscal</a></li>
+                    <li class="nav-item" data-sec="cierre"><a href="#cierre">07. Revisión de Etapa</a></li>
+                    <li class="nav-item" data-sec="limitaciones"><a href="#limitaciones">08. Alcance Legal</a></li>
+                </ul>
+            </nav>
         </div>
-        
-        <div class="project-info">
-            <h4>Importaciones Manorca</h4>
-            <p><strong>Proyecto:</strong> Colección Blazers & Tweed 2026</p>
-            <p><strong>Fecha:</strong> 08/06/2026</p>
-        </div>
-        
-        <ul class="sidebar-menu">
-            <li class="active"><a href="#portada"><i class="fa-solid fa-file-invoice"></i> Portada</a></li>
-            <li><a href="#dashboard"><i class="fa-solid fa-chart-line"></i> Dashboard Ejecutivo</a></li>
-            <li><a href="#resumen"><i class="fa-solid fa-list-check"></i> Resumen Ejecutivo</a></li>
-            <li><a href="#alcance"><i class="fa-solid fa-clipboard-list"></i> Alcance y Limitaciones</a></li>
-            <li><a href="#metodologia"><i class="fa-solid fa-compass-drafting"></i> Metodología</a></li>
-            <li><a href="#opcion1"><i class="fa-solid fa-tags"></i> Opción 1: Proveedor ID-EG</a></li>
-            <li><a href="#opcion2"><i class="fa-solid fa-tag"></i> Opción 2: Proveedor ID-MU</a></li>
-            <li><a href="#comparativa"><i class="fa-solid fa-scale-balanced"></i> Comparativo Ejecutivo</a></li>
-            <li><a href="#piloto"><i class="fa-solid fa-bullseye"></i> Compra Piloto</a></li>
-            <li><a href="#destacados"><i class="fa-solid fa-star"></i> Modelos Destacados</a></li>
-            <li><a href="#ranking"><i class="fa-solid fa-trophy"></i> Ranking SIT</a></li>
-            <li><a href="#complementarios"><i class="fa-solid fa-layer-group"></i> Complementarios</a></li>
-            <li><a href="#validacion"><i class="fa-solid fa-shield-check"></i> Validación de Productos</a></li>
-            <li><a href="#riesgos"><i class="fa-solid fa-triangle-exclamation"></i> Riesgos del Sourcing</a></li>
-            <li><a href="#cronograma"><i class="fa-solid fa-route"></i> Próximos Pasos</a></li>
-            <li><a href="#estrategia"><i class="fa-solid fa-briefcase"></i> Simulador y Presupuesto</a></li>
-            <li><a href="#carta"><i class="fa-solid fa-envelope-open-text"></i> Carta del Consultor</a></li>
-        </ul>
-        
+
         <div class="sidebar-footer">
-            <p>Smart Import Trade © 2026</p>
-            <p style="font-size: 0.6rem; margin-top: 0.2rem; opacity: 0.6;">Sourcing & Logistics</p>
+            <strong>Smart Import Company LLC</strong><br>
+            Sourcing · Logistics · China → LATAM<br>
+            <span style="color: var(--copper); font-size: 0.65rem; font-weight: 600;">v1.2 (Año Comercial 2026)</span>
         </div>
     </aside>
 
-    <!-- MAIN CONTENT AREA -->
+    <!-- CUERPO CENTRAL DE INFORMACIÓN -->
     <main class="main-content">
         
-        <!-- HEADER PANEL -->
-        <header class="main-header">
+        <!-- ENCABEZADO PRINCIPAL -->
+        <header class="doc-header">
             <div>
-                <h2>Desarrollo de Colección</h2>
-                <div class="header-meta">
-                    Cliente: <strong>Importaciones Manorca S.A.C.</strong> | RUC: <strong>20615677010</strong>
-                </div>
+                <h1>Estudio de Viabilidad Comercial</h1>
+                <div class="subtitle-page">Análisis Económico Operativo del Lote</div>
             </div>
-            <div class="header-actions">
-                <button class="theme-toggle" id="themeBtn" title="Alternar Modo Oscuro">
-                    <i class="fa-solid fa-moon"></i>
-                </button>
-                <button class="btn btn-secondary" onclick="downloadPDF(this)">
-                    <i class="fa-solid fa-file-pdf"></i> Descargar Reporte
-                </button>
+            <div class="header-meta-grid">
+                <div class="meta-item">
+                    <span class="meta-label">ATENCIÓN A</span>
+                    <span class="meta-value">Gisela y Wilfredo Rengifo</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">CLIENTE</span>
+                    <span class="meta-value">Importaciones Manorca S.A.C.</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">REFERENCIA</span>
+                    <span class="meta-value">SOU-20260622-7699</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">FECHA</span>
+                    <span class="meta-value">23 de Junio de 2026</span>
+                </div>
             </div>
         </header>
 
-        <!-- SECTIONS CONTAINER -->
-
-        <!-- PORTADA -->
-        <div id="portada" class="portada-hero" style="scroll-margin-top: 2rem;">
-            <div class="portada-badge">Smart Import Trade</div>
-            <h1>INFORME PRELIMINAR DE SOURCING Y EVALUACIÓN COMERCIAL</h1>
-            <p class="subtitle">Desarrollo de Colección de Blazers, Chaquetas Tweed y Cárdigans</p>
-            
-            <div class="cover-collage">
-                <div class="collage-card">
-                    <img src="fotos blazer/1.jpeg" alt="Blazer Blanco Premium">
-                    <div class="caption">Blazer Blanco</div>
-                </div>
-                <div class="collage-card">
-                    <img src="fotos blazer/2.jpeg" alt="Blazer Rosado Tweed">
-                    <div class="caption">Rosado Tweed</div>
-                </div>
-                <div class="collage-card">
-                    <img src="fotos blazer/6.jpeg" alt="Abrigo Camel Largo">
-                    <div class="caption">Abrigo Camel</div>
-                </div>
+        <!-- DASHBOARD METRICAS -->
+        <section class="meta-grid">
+            <div class="meta-card">
+                <div class="label">Estado de la Carga</div>
+                <div class="value highlight">Según Fábrica</div>
+                <div class="sub-label text-success">Estimado en 10 días</div>
             </div>
-            
-            <div class="cover-meta">
-                <div class="meta-item">
-                    <span class="label">Atención</span>
-                    <span class="value">Gisela y Wilfredo</span>
-                </div>
-                <div class="meta-item">
-                    <span class="label">Fecha</span>
-                    <span class="value">08 de Junio de 2026</span>
-                </div>
-                <div class="meta-item">
-                    <span class="label">Confidencialidad</span>
-                    <span class="value" style="color: var(--gold-light); font-weight: 600;">Uso Exclusivo del Cliente</span>
-                </div>
+            <div class="meta-card">
+                <div class="label">Inversión Estimada</div>
+                <div class="value">S/ 38,437.07</div>
+                <div class="sub-label">USD 10,982.02 (TC Ref. 3.50)</div>
             </div>
-        </div>
-
-        <!-- EXECUTIVE DASHBOARD -->
-        <section id="dashboard" class="dashboard-grid" style="scroll-margin-top: 2rem;">
-            <div class="dashboard-card">
-                <div class="value">2</div>
-                <div class="label">Proveedores Evaluados</div>
+            <div class="meta-card">
+                <div class="label">Impuestos Liquidados</div>
+                <div class="value" style="color: var(--success-text);">USD 1,964.91</div>
+                <div class="sub-label">Sujeto a evaluación contable</div>
             </div>
-            <div class="dashboard-card">
-                <div class="value">15</div>
-                <div class="label">Modelos Analizados</div>
-            </div>
-            <div class="dashboard-card highlight-card">
-                <div class="value">5</div>
-                <div class="label">Modelos Recomendados</div>
-            </div>
-            <div class="dashboard-card highlight-card">
-                <div class="value">USD 5,000</div>
-                <div class="label">Presupuesto Objetivo</div>
-            </div>
-            <div class="dashboard-card">
-                <div class="value">Colección Piloto</div>
-                <div class="label">Estrategia Sugerida</div>
-            </div>
-            <div class="dashboard-card">
-                <div class="value" style="color: var(--gold-light);">En Sourcing</div>
-                <div class="label">Estado del Proyecto</div>
+            <div class="meta-card">
+                <div class="label">Total Unidades Lote</div>
+                <div class="value">601 Unidades</div>
+                <div class="sub-label">Modelos Seleccionados</div>
             </div>
         </section>
 
-        <!-- RESUMEN EJECUTIVO -->
-        <section id="resumen">
-            <h2 class="section-title">1. Resumen Ejecutivo</h2>
-            <p class="intro-text">El presente estudio consolida la búsqueda preliminar de proveedores para la importación piloto de sastrería de moda femenina solicitado por su negocio.</p>
-            <p style="margin-bottom: 1.5rem;">Se identificaron dos alternativas de abastecimiento en China que cumplen formalmente con los patrones estéticos de las 15 referencias. Tras analizar detalladamente los presupuestos de fabricación, se constata una diferencia muy marcada en la inversión total requerida. La evaluación se ha realizado a nivel documental e imágenes preliminares provistas por los proveedores.</p>
-            
-            <div class="callout-box" style="border-left-color: var(--gold-light);">
-                <h4><i class="fa-solid fa-circle-info"></i> Descargo de Responsabilidad Comercial y Legal</h4>
-                <p style="font-size: 0.88rem; line-height: 1.5; color: var(--text-dark); font-weight: normal; margin-top: 0.4rem;">
-                    Este documento constituye un análisis preliminar y documental de sourcing, elaborado exclusivamente con fines informativos sobre la base de cotizaciones, catálogos e imágenes declaradas por los proveedores. Smart Import Trade no certifica ni asume responsabilidad legal, civil o comercial respecto a la calidad física final, la idoneidad técnica de confección ni el éxito comercial de los productos importados. Es un requisito mandatorio para el importador solicitar contramuestras físicas homologadas e implementar controles de calidad y auditorías técnicas presenciales antes de autorizar la producción masiva o realizar transferencias financieras definitivas.
-                </p>
-            </div>
+        <!-- SECCIÓN 1 -->
+        <section id="resumen" class="section-block featured">
+            <h2>01 — Resumen Ejecutivo</h2>
+            <p>
+                Estimado Sr. Wilfredo, a continuación se presenta el análisis de viabilidad técnica y financiera estimado para el desarrollo de la orden de importación de su negocio. Este informe consolida la proyección referencial entre la <strong>Cotización Internacional (Proforma)</strong> y la <strong>Matriz de Costeo Estimado de Aduanas</strong> puesta en Lima.
+            </p>
+            <p>
+                De acuerdo con la información proporcionada por el fabricante, los modelos seleccionados contarían con <strong>disponibilidad en inventario</strong>, lo que proyectaría una reducción en los tiempos de espera respecto a la producción regular. Sujeto a verificación durante la inspección preembarque, se estima que la carga podría estar lista para su consolidación logística en un plazo referencial de <strong>10 días calendario</strong>.
+            </p>
 
-            <div class="callout-box">
-                <h4><i class="fa-solid fa-triangle-exclamation"></i> Conclusión Preliminar Smart Import Trade</h4>
-                <p style="font-weight: normal;">La <strong>Opción 2 (Proveedor ID-MU)</strong> destaca como la alternativa más competitiva en costo unitario. Permite optimizar el presupuesto inicial de adquisición en comparación con la Opción 1. Esto facilita la estructuración de una colección de prueba preliminar para validar la recepción en vitrina del mercado local con una reducida exposición financiera inicial.</p>
-            </div>
-            <p>Debido al MOQ requerido de 200 unidades por referencia, aconsejamos no comprar la totalidad del catálogo en la primera orden, sino concentrar esfuerzos en un mix estratégico de 4 o 5 modelos destacados.</p>
-        </section>
-
-        <!-- ALCANCE DEL SOURCING -->
-        <section id="alcance" style="scroll-margin-top: 2rem;">
-            <h2 class="section-title">Alcance y Limitaciones del Sourcing</h2>
-            <p class="intro-text">Como parte del presente proyecto de consultoría preliminar, Smart Import Trade ha desarrollado un conjunto de actividades clave y delimitado sus exclusiones correspondientes:</p>
-            
-            <div class="alcance-grid">
-                <div class="alcance-card incluye">
-                    <h3><i class="fa-solid fa-circle-check"></i> Actividades Desarrolladas (Incluye)</h3>
-                    <ul class="alcance-list">
-                        <li class="incluye-item"><strong>✓</strong> Identificación y filtrado preliminar de proveedores textiles en origen.</li>
-                        <li class="incluye-item"><strong>✓</strong> Comparación de alternativas comerciales FOB sobre base documental.</li>
-                        <li class="incluye-item"><strong>✓</strong> Evaluación preliminar de precios unitarios y mínimos de compra (MOQ) cotizados.</li>
-                        <li class="incluye-item"><strong>✓</strong> Análisis visual comparativo de similitud de diseño respecto a la solicitud del cliente.</li>
-                        <li class="incluye-item"><strong>✓</strong> Identificación de oportunidades clave de optimización del presupuesto objetivo.</li>
-                        <li class="incluye-item"><strong>✓</strong> Formulación de una estrategia comercial de compra piloto para mitigar riesgos.</li>
-                    </ul>
+            <div class="product-gallery">
+                <div class="product-img-card">
+                    <img src="PRINCESS CUT COAT WITH LINING.jpeg" alt="Princess Cut Coat">
+                    <div class="product-img-title">Princess Cut Coat with Lining (201 un.)</div>
                 </div>
-                <div class="alcance-card excluye">
-                    <h3><i class="fa-solid fa-circle-xmark"></i> Exclusiones del Reporte (No Incluye)</h3>
-                    <ul class="alcance-list">
-                        <li class="excluye-item"><strong>✗</strong> Auditorías presenciales de fábrica o de cumplimiento laboral.</li>
-                        <li class="excluye-item"><strong>✗</strong> Ensayos físicos, químicos o de laboratorio de los tejidos.</li>
-                        <li class="excluye-item"><strong>✗</strong> Emisión de certificaciones oficiales de calidad u origen.</li>
-                        <li class="excluye-item"><strong>✗</strong> Control y supervisión del proceso de producción en taller.</li>
-                        <li class="excluye-item"><strong>✗</strong> Inspecciones de control de calidad preembarque (PSI) en puerto.</li>
-                        <li class="excluye-item"><strong>✗</strong> Gestión, contratación o liquidación definitiva del flete y seguros logísticos.</li>
-                    </ul>
+                <div class="product-img-card">
+                    <img src="Princess Cut Tweed Blazer.jpeg" alt="Princess Cut Tweed Blazer">
+                    <div class="product-img-title">Princess Cut Tweed Blazer (200 un.)</div>
                 </div>
-            </div>
-            
-            <div class="callout-box" style="margin-top: 2rem;">
-                <p><i class="fa-solid fa-circle-info" style="color: var(--copper);"></i> <strong>Nota de Sourcing:</strong> Las exclusiones detalladas forman parte de fases operativas posteriores que deben planificarse y presupuestarse de forma independiente antes de concretar la orden de compra de producción total.</p>
+                <div class="product-img-card">
+                    <img src="short black knit cardigan with faux pearl design.jpeg" alt="Short Black Knit Cardigan">
+                    <div class="product-img-title">Short Black Knit Cardigan (200 un.)</div>
+                </div>
             </div>
         </section>
 
-        <!-- METODOLOGÍA -->
-        <section id="metodologia">
-            <h2 class="section-title">2. Metodología de Búsqueda y Evaluación</h2>
-            <p class="intro-text">Smart Import Trade implementó un proceso preliminar estructurado en las siguientes fases analíticas:</p>
-            <ul class="custom-list">
-                <li><strong>Investigación de Proveedores:</strong> Filtro y preselección de fábricas de confección con capacidad exportadora declarada y especialización en sastrería.</li>
-                <li><strong>Comparación de Precios Unitarios:</strong> Evaluación de los presupuestos FOB de cada artículo para identificar el margen bruto preliminar local.</li>
-                <li><strong>Evaluación Visual de Similitud:</strong> Cotejo preliminar de las muestras digitales e imágenes de catálogo respecto a las especificaciones de diseño.</li>
-                <li><strong>Cálculo de Cantidades Mínimas (MOQ):</strong> Identificación de mínimos de compra (200 unidades por modelo) y viabilidad de flexibilidad comercial.</li>
-                <li><strong>Análisis de Oportunidad Comercial:</strong> Clasificación de las referencias según tendencias del mercado y facilidad de venta cruzada en el sector retail local.</li>
+        <!-- SECCIÓN 2 -->
+        <section id="costos" class="section-block">
+            <h2>02 — Análisis Comparativo de Costos</h2>
+            <p>
+                La importación directa se perfila como un modelo que puede optimizar la estructura de costos frente a la compra local. A continuación, se detalla la proyección de los costos integrados de los productos (que incluyen estimaciones de flete, seguros, servicios y el pago del <strong>Ad Valorem aduanero del 11%</strong>) frente a los valores referenciales de la compra local:
+            </p>
+            <ul>
+                <li><strong class="text-copper">PRINCESS CUT COAT WITH LINING (201 un.):</strong> El costo de importación proyectado puesto en Lima es de <strong>S/ 48.46 por unidad</strong>, frente a los S/ 85.00 - S/ 100.00 de la compra local previa. Esto representaría una <strong>optimización proyectada del 45%</strong> en adquisición.</li>
+                <li><strong class="text-copper">Princess Cut Tweed Blazer (200 un.):</strong> El costo estimado es de <strong>S/ 58.56 por unidad</strong>, frente a los S/ 65.00 - S/ 75.00 de la modalidad de fardos locales. La importación de origen busca estandarizar las especificaciones del producto, procurando mitigar el riesgo de merma, condición que será validada tras la inspección correspondiente.</li>
+                <li><strong class="text-copper">Short Black Knit Cardigan (200 un.):</strong> El costo estimado es de <strong>S/ 39.11 por unidad</strong>, frente a la adquisición local de S/ 45.00 - S/ 55.00. Este diferencial ofrece un margen de maniobra proyectado que el cliente podrá gestionar según su estrategia comercial.</li>
             </ul>
         </section>
 
-        <!-- OPCIÓN 1: PROVEEDOR ID-EG -->
-        <section id="opcion1">
-            <h2 class="section-title">3. Alternativa Identificada: Opción 1 – Proveedor ID-EG</h2>
-            <p class="intro-text">Propuesta comercial orientada a un segmento de valor percibido medio-alto. Según catálogo del fabricante, ofrece acabados de alto valor percibido declarado y una paleta extendida de colores, requiriendo un costo unitario FOB más elevado.</p>
+        <!-- SECCIÓN 3 -->
+        <section id="proforma" class="section-block">
+            <h2>03 — Proforma Invoice Oficial (SITQ20260622-001)</h2>
+            <p>
+                Este es el desglose comercial de la orden bajo condiciones de entrega <strong>EXW (Ningbo, China)</strong>. Se especifican los precios negociados por prenda en fábrica y el beneficio de crédito aplicado al balance final:
+            </p>
             
-            <div class="catalog-control">
-                <h3>Catálogo Completo - Proveedor ID-EG</h3>
-            </div>
-
-            <div class="table-responsive">
-                <table id="tableOp1">
-                    <thead>
-                        <tr>
-                            <th style="width: 60px; text-align: center;">Item</th>
-                            <th style="width: 70px; text-align: center;">Foto</th>
-                            <th>Descripción del Producto</th>
-                            <th>Colores / Tallas</th>
-                            <th style="text-align: right; width: 110px;">P. Unit.</th>
-                            <th style="text-align: right; width: 120px;">Total (200 u.)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="catalogOp1Body">
-                        <!-- Rendered by JS -->
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- OPCIÓN 2: PROVEEDOR ID-MU -->
-        <section id="opcion2">
-            <h2 class="section-title">4. Alternativa Identificada: Opción 2 – Proveedor ID-MU</h2>
-            <p class="intro-text">Alternativa que ofrece modelos con una alta similitud visual y patrones de confección equivalentes según imágenes digitales provistas, con costos de fabricación significativamente menores.</p>
-            
-            <div class="catalog-control">
-                <h3>Catálogo Completo - Proveedor ID-MU</h3>
-            </div>
-
-            <div class="table-responsive">
-                <table id="tableOp2">
-                    <thead>
-                        <tr>
-                            <th style="width: 60px; text-align: center;">Item</th>
-                            <th style="width: 70px; text-align: center;">Foto</th>
-                            <th>Descripción del Producto</th>
-                            <th>Colores / Tallas</th>
-                            <th style="text-align: right; width: 110px;">P. Unit.</th>
-                            <th style="text-align: right; width: 120px;">Total (200 u.)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="catalogOp2Body">
-                        <!-- Rendered by JS -->
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- COMPARATIVO EJECUTIVO -->
-        <section id="comparativa">
-            <h2 class="section-title">5. Comparativo Ejecutivo de Proveedores</h2>
-            <p class="intro-text">Detalle comparativo modelo por modelo para evaluar las variaciones de precio unitario entre ambas alternativas de origen:</p>
-            
-            <div class="table-responsive" style="margin-bottom: 2rem;">
+            <div class="table-container table-dark-premium">
+                <div class="table-title">Detalle de Mercadería y Sourcing (Valores en USD)</div>
                 <table>
                     <thead>
                         <tr>
-                            <th style="width: 60px; text-align: center;">Item</th>
-                            <th>Modelo de Referencia</th>
-                            <th style="text-align: right; width: 120px;">Precio Opción 1</th>
-                            <th style="text-align: right; width: 120px;">Precio Opción 2</th>
-                            <th style="text-align: right; width: 120px;">Diferencia %</th>
-                            <th>Observación Preliminar</th>
+                            <th class="text-center" style="width: 60px;">Ítem</th>
+                            <th>Descripción Comercial del Producto</th>
+                            <th class="text-center" style="width: 110px;">Cantidad</th>
+                            <th class="text-right" style="width: 150px;">Precio Unit. (USD)</th>
+                            <th class="text-right" style="width: 160px;">Total General (USD)</th>
                         </tr>
                     </thead>
-                    <tbody id="compareBody">
-                        <!-- Rendered by JS -->
+                    <tbody>
+                        <tr>
+                            <td class="text-center bold text-copper-light">01</td>
+                            <td>
+                                <div class="table-flex-prod">
+                                    <img src="Princess Cut Tweed Blazer.jpeg" alt="Blazer Mini" class="table-thumb">
+                                    <div>
+                                        <span class="bold">Princess Cut Tweed Blazer</span>
+                                        <span class="text-explain">Bouclé texturizado de poliéster, Slim Fit con hombreras internas, doble botonadura.</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-center bold">200.00</td>
+                            <td class="text-right">USD 11.59</td>
+                            <td class="text-right bold">USD 2,318.00</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center bold text-copper-light">02</td>
+                            <td>
+                                <div class="table-flex-prod">
+                                    <img src="PRINCESS CUT COAT WITH LINING.jpeg" alt="Coat Mini" class="table-thumb">
+                                    <div>
+                                        <span class="bold">PRINCESS CUT COAT WITH LINING</span>
+                                        <span class="text-explain">Abrigo de paño denso con doble botonadura dorada metálica. Corte princesa.</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-center bold text-copper-light">201.00</td>
+                            <td class="text-right">USD 8.25</td>
+                            <td class="text-right bold">USD 1,658.25</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center bold text-copper-light">03</td>
+                            <td>
+                                <div class="table-flex-prod">
+                                    <img src="short black knit cardigan with faux pearl design.jpeg" alt="Cardigan Mini" class="table-thumb">
+                                    <div>
+                                        <span class="bold">short black knit cardigan with faux pearl design</span>
+                                        <span class="text-explain">Cárdigan de punto afelpado estilo Chanel, botones de rosa blanca.</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-center bold">200.00</td>
+                            <td class="text-right">USD 7.07</td>
+                            <td class="text-right bold">USD 1,414.00</td>
+                        </tr>
+                        <tr class="bg-total-dark" style="border-top: 1px solid rgba(255,255,255,0.2);">
+                            <td colspan="2" class="bold text-right text-gray">MERCADERÍA (SUBTOTAL VALOR FOB)</td>
+                            <td class="text-center bold text-copper-light">601.00</td>
+                            <td></td>
+                            <td class="text-right bold text-copper-light">USD 5,390.25</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="text-right text-gray">Service Fee (Gestión Integral de Compra e Inspección)</td>
+                            <td class="text-right">USD 600.00</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="text-right" style="color: #FF6B6B; font-weight: 600;">Descuento / Crédito Comercial Aplicado a Favor</td>
+                            <td class="text-right bold" style="color: #FF6B6B;">-USD 497.00</td>
+                        </tr>
+                        <tr class="bg-total-dark" style="border-top: 2px solid var(--copper);">
+                            <td colspan="4" class="bold text-right text-copper-light">TOTAL COMPRA INTERNACIONAL NETO (VALOR EXW)</td>
+                            <td class="text-right bold text-copper-light">USD 5,493.25</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
+        </section>
 
-            <div class="callout-box">
-                <h4><i class="fa-solid fa-chart-line"></i> Conclusiones del Análisis Comparativo</h4>
-                <p style="margin-bottom: 1rem; font-weight: normal;">Tras la evaluación documental de ambas propuestas, la Opción 2 presenta costos unitarios sustancialmente menores en la mayoría de referencias analizadas.</p>
-                
-                <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--copper); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Factores clave del comparativo:</div>
-                <ul class="alcance-list" style="margin-bottom: 1rem;">
-                    <li><strong>✓</strong> Estructura de costos FOB unitarios más competitiva.</li>
-                    <li><strong>✓</strong> Menor volumen de capital expuesto para una primera importación piloto.</li>
-                    <li><strong>✓</strong> Disminución del riesgo financiero ante contingencias logísticas iniciales.</li>
-                    <li><strong>✓</strong> Similitud estética satisfactoria basada en material fotográfico.</li>
-                </ul>
-                
-                <div style="margin-top: 1rem; border-top: 1px solid rgba(193, 127, 62, 0.2); padding-top: 0.8rem; font-size: 0.95rem; line-height: 1.5;">
-                    <strong>Conclusión Comercial:</strong> La Opción 2 califica preliminarmente como la más favorable para el inicio de una importación de prueba, orientando los recursos del cliente a validar la viabilidad comercial real.
-                </div>
+        <!-- SECCIÓN 4 -->
+        <section id="costeo" class="section-block">
+            <h2>04 — Matriz Definitiva de Costeo y Liquidación de Aduanas</h2>
+            <p>
+                A continuación, se presenta la estructura económica de la importación procesando la proyección de la base imponible y los impuestos aduaneros correspondientes:
+            </p>
+
+            <div class="alert-box">
+                <h4>📋 NOTA TÉCNICA DE CARÁCTER REFERENCIAL</h4>
+                <p>
+                    Los montos logísticos y operativos presentados en este cuadro son de <strong>carácter netamente referencial y estimado</strong>. Los costos y medidas definitivas de su negocio se determinarán de manera exacta de acuerdo con el <strong>empaque final en la fábrica en China</strong>. Una vez que la mercadería esté empaquetada, se conocerán las dimensiones reales, el peso bruto real y si la fábrica entrega 2 cajas, 5 cajas o el volumen final consolidado. Los tributos y gastos de nacionalización en aduanas se ajustarán de forma proporcional sobre dicho cubicaje verificado. El presente costeo tomó como referencia inicial un volumen estandarizado de 1.00 CBM.
+                </p>
+            </div>
+
+            <div class="table-container table-dark-premium">
+                <div class="table-title">Estructura Económica Integrada de Importación (SOU-20260622-7699)</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Concepto Operativo / Impuesto Aduanero</th>
+                            <th class="text-right" style="width: 140px;">Monto (USD)</th>
+                            <th class="text-right" style="width: 140px;">Monto (PEN)</th>
+                            <th>Naturaleza en el Flujo de Caja</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="bold">Orden de Compra FOB Total (Valor Comercial)</td>
+                            <td class="text-right">USD 5,390.25</td>
+                            <td class="text-right">S/ 18,865.88</td>
+                            <td class="text-gray">Costo directo de mercadería en origen</td>
+                        </tr>
+                        <tr>
+                            <td>Flete Internacional</td>
+                            <td class="text-right">USD 130.00</td>
+                            <td class="text-right">S/ 455.00</td>
+                            <td class="text-gray">Costo logístico internacional (Sujeto a empaque final)</td>
+                        </tr>
+                        <tr>
+                            <td>Seguro de Carga</td>
+                            <td class="text-right">USD 40.00</td>
+                            <td class="text-right">S/ 140.00</td>
+                            <td class="text-gray">Seguro de transporte</td>
+                        </tr>
+                        <tr style="background: var(--navy-dark);">
+                            <td class="bold text-copper-light">VALOR CIF LIQUIDACIÓN SUNAT (OBLIGATORIO)</td>
+                            <td class="text-right bold text-copper-light">USD 5,940.24</td>
+                            <td class="text-right bold text-copper-light">S/ 20,790.84</td>
+                            <td class="bold text-copper-light">Base imponible definitiva para impuestos</td>
+                        </tr>
+                        <tr>
+                            <td>Gastos Locales en Destino (Almacén / Despacho)</td>
+                            <td class="text-right">USD 1,170.00</td>
+                            <td class="text-right">S/ 4,095.00</td>
+                            <td class="text-gray">Servicios logísticos locales en Perú</td>
+                        </tr>
+                        <tr>
+                            <td>Service Fee (Gestión Integral de Compra)</td>
+                            <td class="text-right">USD 600.00</td>
+                            <td class="text-right">S/ 2,100.00</td>
+                            <td class="text-gray">Operación y soporte de Sourcing corporativo</td>
+                        </tr>
+                        <tr>
+                            <td class="bold" style="color: #FF6B6B;">Ad Valorem Aduanero (Tasa Textile 11%)</td>
+                            <td class="text-right bold" style="color: #FF6B6B;">USD 653.43</td>
+                            <td class="text-right bold" style="color: #FF6B6B;">S/ 2,287.01</td>
+                            <td class="bold" style="color: #FF4D4F;">Gasto Directo No Reembolsable (Afecta el costo)</td>
+                        </tr>
+                        <tr>
+                            <td class="bold text-success">IGV de Importación (18% sobre CIF + Ad Valorem)</td>
+                            <td class="text-right text-success bold">USD 1,186.86</td>
+                            <td class="text-right text-success bold">S/ 4,154.01</td>
+                            <td class="text-gray">Crédito Fiscal 100% Recuperable</td>
+                        </tr>
+                        <tr>
+                            <td class="bold text-success">Percepción del IGV (Tasa 10% - Primer Despacho)</td>
+                            <td class="text-right text-success bold">USD 778.05</td>
+                            <td class="text-right text-success bold">S/ 2,723.18</td>
+                            <td class="text-gray">Crédito Tributario Recuperable en Efectivo</td>
+                        </tr>
+                        <tr class="bg-total-dark" style="border-top: 2px solid var(--copper);">
+                            <td class="bold" style="color: var(--copper-light);">INVERSIÓN TOTAL ESTIMADA CON IMPUESTOS</td>
+                            <td class="text-right bold" style="color: var(--copper-light);">USD 10,982.02</td>
+                            <td class="text-right bold text-copper-light">S/ 38,437.07</td>
+                            <td class="bold">Presupuesto consolidado sujeto a variación logística</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </section>
 
-        <!-- ESCENARIO DE COMPRA PILOTO RECOMENDADO -->
-        <section id="piloto" style="scroll-margin-top: 2rem;">
-            <h2 class="section-title">Escenario de Compra Piloto Recomendado</h2>
-            <div class="pilot-strategy-card">
-                <h3>Estrategia de Optimización de Capital</h3>
-                <p style="margin-bottom: 1rem; font-size: 1.05rem; line-height: 1.6; font-weight: normal;">Considerando el presupuesto referencial disponible de aproximadamente <strong>USD 5,000.00</strong>, se recomienda estructurar una importación piloto enfocada a medir la aceptación de diseño, optimizar el uso del flujo de caja y minimizar los riesgos financieros asociados a stock parado.</p>
-                <p style="margin-bottom: 1.5rem; font-size: 1.05rem; line-height: 1.6; font-weight: normal;">La estrategia aconsejada consiste en seleccionar un mix de <strong>4 o 5 referencias de la Opción 2</strong>, priorizando aquellas que presenten la mejor relación de valor visual percibido frente a costo FOB unitario.</p>
-                
-                <div style="font-weight: 600; color: var(--primary-navy); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1rem;">Objetivos sugeridos de la etapa piloto:</div>
-                <div class="objectives-grid">
-                    <div class="objective-item">
-                        <i class="fa-solid fa-square-poll-vertical"></i>
-                        <span>Medir el nivel de rotación de prendas</span>
-                    </div>
-                    <div class="objective-item">
-                        <i class="fa-solid fa-gauge-high"></i>
-                        <span>Evaluar la aceptación de fit y corte local</span>
-                    </div>
-                    <div class="objective-item">
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                        <span>Recoger opiniones sobre el material de confección</span>
-                    </div>
-                    <div class="objective-item">
-                        <i class="fa-solid fa-comments"></i>
-                        <span>Ajustar pedidos de mayor volumen con bases empíricas</span>
-                    </div>
-                </div>
+        <!-- SECCIÓN 5 -->
+        <section id="precios" class="section-block">
+            <h2>05 — Simulación de Precios de Venta al Público (PVP)</h2>
+            <p>
+                Para efectos de simulación referencial en el mercado peruano, el precio de venta proyectado se calcula adicionando un margen estimado sobre el costo unitario integrado de aduanas, aplicando posteriormente la tasa del 18% de IGV. Esta proyección no garantiza resultados comerciales.
+            </p>
+
+            <div class="table-container table-light-premium precios-table">
+                <div class="table-title" style="background: var(--navy-dark);">Escenarios de Proyección de Precios de Venta (Valores en Soles)</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>PRENDA SELECCIONADA</th>
+                            <th>ESTRATEGIA DE VENTA</th>
+                            <th class="text-right" style="width: 120px;">COSTO UNIT. REFERENCIAL</th>
+                            <th class="text-right" style="width: 140px;">PRECIO BASE (SIN IGV)</th>
+                            <th class="text-right" style="width: 140px;">IGV COMERCIAL (18%)</th>
+                            <th class="text-right text-copper bold" style="width: 150px;">PRECIO PROYECTADO (PVP)</th>
+                            <th class="text-right text-success bold" style="width: 140px;">UTILIDAD ESTIMADA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Abrigo -->
+                        <tr>
+                            <td class="bold" style="vertical-align: middle; border-right: 1px solid var(--border-color);">
+                                <div class="table-flex-prod">
+                                    <img src="PRINCESS CUT COAT WITH LINING.jpeg" alt="Coat Th" class="table-thumb light-bg-thumb">
+                                    <div>
+                                        <span>Princess Cut Coat</span><br>
+                                        <span class="text-gray" style="font-size: .75rem; font-weight: 400;">Lote de 201 un.</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Escenario 1 (35%)<br><span class="bold text-copper">⭐ Margen Referencial (45%)</span></td>
+                            <td class="text-right" style="vertical-align: middle; border-right: 1px solid var(--border-color); font-weight: 600;">S/ 48.46</td>
+                            <td>S/ 74.55<br><span class="bold">S/ 88.11</span></td>
+                            <td>S/ 13.42<br><span class="bold">S/ 15.86</span></td>
+                            <td>S/ 87.97<br><span class="bold text-copper">S/ 103.97</span></td>
+                            <td>S/ 26.09<br><span class="bold text-success">S/ 39.65</span></td>
+                        </tr>
+                        
+                        <!-- Blazer -->
+                        <tr style="border-top: 1px solid var(--border-color);">
+                            <td class="bold" style="vertical-align: middle; border-right: 1px solid var(--border-color);">
+                                <div class="table-flex-prod">
+                                    <img src="Princess Cut Tweed Blazer.jpeg" alt="Blazer Th" class="table-thumb light-bg-thumb">
+                                    <div>
+                                        <span>Tweed Blazer</span><br>
+                                        <span class="text-gray" style="font-size: .75rem; font-weight: 400;">Lote de 200 un.</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Escenario 1 (30%)<br><span class="bold text-copper">⭐ Margen Referencial (40%)</span></td>
+                            <td class="text-right" style="vertical-align: middle; border-right: 1px solid var(--border-color); font-weight: 600;">S/ 58.56</td>
+                            <td>S/ 83.66<br><span class="bold">S/ 97.60</span></td>
+                            <td>S/ 15.06<br><span class="bold">S/ 17.57</span></td>
+                            <td>S/ 98.72<br><span class="bold text-copper">S/ 115.17</span></td>
+                            <td>S/ 25.10<br><span class="bold text-success">S/ 39.04</span></td>
+                        </tr>
+
+                        <!-- Cardigan -->
+                        <tr style="border-top: 1px solid var(--border-color);">
+                            <td class="bold" style="vertical-align: middle; border-right: 1px solid var(--border-color);">
+                                <div class="table-flex-prod">
+                                    <img src="short black knit cardigan with faux pearl design.jpeg" alt="Cardigan Th" class="table-thumb light-bg-thumb">
+                                    <div>
+                                        <span>Knit Cardigan</span><br>
+                                        <span class="text-gray" style="font-size: .75rem; font-weight: 400;">Lote de 200 un.</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Escenario 1 (30%)<br><span class="bold text-copper">⭐ Margen Referencial (40%)</span></td>
+                            <td class="text-right" style="vertical-align: middle; border-right: 1px solid var(--border-color); font-weight: 600;">S/ 39.11</td>
+                            <td>S/ 55.87<br><span class="bold">S/ 65.18</span></td>
+                            <td>S/ 10.06<br><span class="bold">S/ 11.73</span></td>
+                            <td>S/ 65.93<br><span class="bold text-copper">S/ 76.91</span></td>
+                            <td>S/ 16.76<br><span class="bold text-success">S/ 26.07</span></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </section>
 
-        <!-- MODELOS DESTACADOS -->
-        <section id="destacados">
-            <h2 class="section-title">6. Modelos Destacados con Alto Potencial</h2>
-            <p class="intro-text">Smart Import Trade preseleccionó cinco modelos clave de la colección basándose en su adaptabilidad al mercado local y excelente proyección visual:</p>
-            
-            <div class="featured-grid" id="featuredGrid">
-                <!-- Rendered by JS -->
+        <!-- SECCIÓN 6 -->
+        <section id="fiscal" class="section-block">
+            <h2>06 — Aspectos Tributarios Referenciales</h2>
+            <p>
+                Los tributos liquidados en la base aduanera que suman <strong>USD 1,964.91</strong> (IGV + Percepción) podrían no constituir un gasto definitivo para la negocio. Conforme a la normativa peruana, estos conceptos pueden estar sujetos a mecanismos de recuperación, dependiendo de la situación fiscal de cada contribuyente:
+            </p>
+            <ol>
+                <li><strong>IGV de Importación (USD 1,186.86):</strong> La aplicación de este monto como <strong>Crédito Fiscal</strong> dependerá de las operaciones gravadas que realice el contribuyente y deberá ser validada por su área contable.</li>
+                <li><strong>Percepción del IGV (USD 778.05):</strong> Corresponde al pago adelantado en aduanas. De acuerdo con la normativa de SUNAT, puede ser objeto de compensación o devolución bajo las siguientes modalidades generales:
+                    <ul style="margin-top: 6px; margin-left: 20px;">
+                        <li><strong>Compensación:</strong> Posibilidad de utilizar el saldo para amortizar otros tributos administrados por SUNAT.</li>
+                        <li><strong>Devolución:</strong> Procedimiento sujeto a los plazos, requisitos formales y fiscalizaciones eventuales que disponga la SUNAT. Todo trámite deberá ser evaluado y ejecutado por el asesor contable del cliente.</li>
+                    </ul>
+                </li>
+            </ol>
+        </section>
+
+        <!-- SECCIÓN 7 -->
+        <section id="cierre" class="section-block">
+            <h2>07 — Revisión de Etapa y Siguientes Pasos</h2>
+            <p>
+                Con la presentación de los costos estimados y la proyección referencial de la importación, concluimos la elaboración de este informe final. Los escenarios planteados constituyen una base referencial para la evaluación y decisión del cliente.
+            </p>
+
+            <div class="alert-box">
+                <h4>Condición de Pago Solicitada por el fabricante:</h4>
+                <p>
+                    ⚠️ <strong>Nota Operativa:</strong> De acuerdo con la información brindada por la fábrica, y al manifestar contar con stock de las 601 prendas, el fabricante solicita el pago del <strong>100% del valor FOB de la Orden de Compra</strong> para proceder con la liberación de la mercadería.
+                </p>
+                <p style="margin-top: 10px; margin-bottom: 0;">
+                    Es potestad y responsabilidad del cliente decidir si desea proceder bajo esta modalidad. Realizar un solo pago consolida las transferencias y mitiga múltiples comisiones bancarias, pero la decisión de asumir este adelanto recae exclusivamente en la negocio compradora.
+                </p>
+            </div>
+
+            <div class="alert-box success">
+                <h4>🚀 Propuesta lista para revisión del cliente</h4>
+                <p style="margin-bottom: 12px; font-weight: 500; color: var(--success-text);">Para dar inicio a la siguiente etapa de gestión con el fabricante, se requiere la instrucción del cliente bajo el siguiente flujo propuesto:</p>
+                <p>1. Procesar la transferencia internacional correspondiente al valor FOB comercial acordado con la fábrica.</p>
+                <p>2. Enviar el comprobante bancario al ejecutivo asignado de SMART IMPORT para notificar a la fábrica y solicitar la separación del stock.</p>
+                <p>3. Activación de la siguiente fase: Envío de inspectores y ejecución del control técnico de calidad visual y documental, previo al cierre de la carga.</p>
             </div>
         </section>
 
-        <!-- RANKING -->
-        <section id="ranking">
-            <h2 class="section-title">7. Ranking Smart Import Trade</h2>
-            <p class="intro-text">Para facilitar la toma de decisiones, puntuamos preliminarmente cada modelo destacado en base a: Costo unitario FOB, Estética de diseño y Potencial de rotación comercial estimado.</p>
-            
-            <div class="ranking-card-grid" id="rankingGrid">
-                <!-- Rendered by JS -->
-            </div>
-
-            <div style="margin-top: 2.5rem; margin-bottom: 2.5rem;">
-                <h3>Justificación de la Selección Comercial:</h3>
-                <ul class="custom-list" style="margin-top: 1rem;">
-                    <li><strong>1° Puesto - Chaqueta Chanel (Item 4):</strong> Presenta el costo unitario más bajo en la Opción 2 ($5.79), un corte clásico cropped altamente valorado y gran rotación comercial estimada en tono negro.</li>
-                    <li><strong>2° Puesto - Cárdigan punto texturizado (Item 10):</strong> Prenda de punto ideal para temporadas de otoño y primavera. Excelente equilibrio estético y bajo costo de origen.</li>
-                    <li><strong>3° Puesto - Cárdigan punto acanalado (Item 11):</strong> Es la prenda tejida más económica de la selección ($4.52), perfecta para incentivar compras de volumen.</li>
-                </ul>
-            </div>
-
-            <!-- SELLO RECOMENDACIÓN OFICIAL DENTRO DE RANKING -->
-            <div class="recommendation-seal-card" style="margin-top: 2.5rem; margin-bottom: 0;">
-                <h3><i class="fa-solid fa-stamp" style="color: var(--gold-light);"></i> Recomendación Oficial Smart Import Trade</h3>
-                <div class="seal-grid">
-                    <div>
-                        <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; color: #FFFFFF; font-family: 'Montserrat';">
-                            Alternativa Recomendada: <span style="color: var(--gold-light);">OPCIÓN 2</span>
-                        </div>
-                        <div class="seal-rating-row">
-                            <span class="seal-rating-label">Calificación de Costo Unitario:</span>
-                            <span class="seal-rating-stars">⭐⭐⭐⭐⭐</span>
-                        </div>
-                        <div class="seal-rating-row">
-                            <span class="seal-rating-label">Proyección Estética Visual:</span>
-                            <span class="seal-rating-stars">⭐⭐⭐⭐⭐</span>
-                        </div>
-                        <div class="seal-rating-row">
-                            <span class="seal-rating-label">Mitigación de Riesgo Financiero:</span>
-                            <span class="seal-rating-stars">⭐⭐⭐⭐⭐</span>
-                        </div>
-                        <div class="seal-rating-row" style="border-bottom: none;">
-                            <span class="seal-rating-label">Ajuste a Presupuesto Objetivo:</span>
-                            <span class="seal-rating-stars">⭐⭐⭐⭐⭐</span>
-                        </div>
-                    </div>
-                    <div style="display: flex; flex-direction: column; justify-content: center;">
-                        <div class="seal-comment-box">
-                            <strong>Comentario del Consultor:</strong> La Opción 2 califica como la propuesta más idónea para iniciar la validación comercial debido a sus bajos costos unitarios, lo que permite testear el mercado peruano con un desembolso inicial prudente y maximizando la rentabilidad potencial.
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- LIMITACIONES Y ALCANCE -->
+        <section id="limitaciones" class="section-block">
+            <h2>08 — Limitaciones y Alcance del Informe</h2>
+            <ul style="margin-bottom: 0;">
+                <li><strong>Carácter Referencial:</strong> Todos los costos, tarifas logísticas y proyecciones económicas aquí presentados son netamente estimados y referenciales.</li>
+                <li><strong>Variaciones Logísticas y Aduaneras:</strong> Los costos finales pueden variar según el peso, volumen, empaque final, tarifas navieras al momento del embarque y ajustes aduaneros en destino.</li>
+                <li><strong>Calidad del Producto:</strong> La calidad definitiva de la mercadería solo podrá ser validada mediante el servicio de inspección preembarque en origen o la revisión física de la carga. Para mayor seguridad, se recomienda solicitar muestras físicas antes de autorizar el embarque masivo. Smart Import no asume responsabilidad por la calidad final ni por variaciones respecto a las referencias suministradas por la fábrica.</li>
+                <li><strong>Tipo de Cambio:</strong> Las proyecciones en moneda local (PEN) están sujetas a las fluctuaciones del tipo de cambio al momento del pago de los tributos y servicios.</li>
+                <li><strong>Resultados Comerciales:</strong> Este documento no constituye garantía alguna de aceptación comercial, rotación de inventario, ni rentabilidad asegurada.</li>
+                <li><strong>Responsabilidad de Compra:</strong> La decisión de compra y la aceptación de las condiciones comerciales de la operación corresponden exclusivamente al cliente. Smart Import proporciona información, coordinación operativa y gestión de compra internacional para facilitar la toma de decisiones del cliente, sin que ello constituya garantía de resultados comerciales, financieros o tributarios.</li>
+                <li><strong>Actualización de Información:</strong> Smart Import se reserva el derecho de actualizar las estimaciones y proyecciones del presente informe conforme se reciba nueva información operativa o de mercado.</li>
+            </ul>
         </section>
-
-        <!-- COMPLEMENTARIOS -->
-        <section id="complementarios">
-            <h2 class="section-title">8. Productos Complementarios Identificados</h2>
-            <p class="intro-text">Durante el sourcing, localizamos 3 productos fuera del rango de abrigos que resultan de interés comercial para campañas secundarias:</p>
-            
-            <div class="complementary-grid" id="compGrid">
-                <!-- Rendered by JS -->
-            </div>
-        </section>
-
-        <!-- VALIDACIÓN -->
-        <section id="validacion">
-            <h2 class="section-title">9. Validación de Productos</h2>
-            <p class="intro-text">Para mitigar posibles contingencias en confección, se aconseja agendar las siguientes validaciones previas al inicio de producción:</p>
-            
-            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin-top: 1rem;">
-                <div>
-                    <h3 style="color: var(--copper); font-size: 1.1rem; margin-bottom: 0.75rem;"><i class="fa-solid fa-camera"></i> 1. Control Multimedia Visual</h3>
-                    <p style="font-size: 0.9rem; margin-bottom: 1rem;">Exigir tomas fotográficas reales de producción y videos detallados en maniquí para constatar el calce, terminación de avíos y caída de la tela de tweed.</p>
-                    
-                    <h3 style="color: var(--copper); font-size: 1.1rem; margin-bottom: 0.75rem;"><i class="fa-solid fa-microscope"></i> 2. Ficha Técnica de Hilados</h3>
-                    <p style="font-size: 0.9rem;">Verificación documental de la composición exacta de fibras (poliéster, algodón, lana o acrílico) para evitar demoras aduaneras y cumplir con el etiquetado obligatorio en el Perú.</p>
-                </div>
-                <div>
-                    <h3 style="color: var(--copper); font-size: 1.1rem; margin-bottom: 0.75rem;"><i class="fa-solid fa-ruler-combined"></i> 3. Tabla de Medidas y Calce</h3>
-                    <p style="font-size: 0.9rem; margin-bottom: 1rem;">Verificar las medidas específicas (pecho, hombro, largo) en centímetros por talla (S, M, L) para validar la adecuada equivalencia con el biotipo local.</p>
-                    
-                    <h3 style="color: var(--copper); font-size: 1.1rem; margin-bottom: 0.75rem;"><i class="fa-solid fa-box-open"></i> 4. Muestreo Físico en Destino</h3>
-                    <p style="font-size: 0.9rem;">Coordinar la importación aérea de muestras de los modelos seleccionados para evaluar de forma directa la mano, costuras y resistencia de los materiales antes de liberar fondos.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- RIESGOS Y CONSIDERACIONES -->
-        <section id="riesgos" style="scroll-margin-top: 2rem;">
-            <h2 class="section-title">Riesgos y Consideraciones del Sourcing</h2>
-            <div class="risk-section" style="margin-bottom: 0; box-shadow: none; border: none; padding: 0;">
-                <p class="intro-text" style="margin-bottom: 1.5rem;">Una correcta gestión de riesgos es vital en comercio exterior. Identificamos los principales factores a considerar en el proyecto:</p>
-                
-                <div class="risk-grid">
-                    <div class="risk-item">
-                        <i class="fa-solid fa-triangle-exclamation"></i>
-                        <div class="risk-item-text">
-                            <strong>Variaciones cromáticas</strong>
-                            <span>Diferencias de tono entre la imagen digital del catálogo y el tejido real de producción.</span>
-                        </div>
-                    </div>
-                    <div class="risk-item">
-                        <i class="fa-solid fa-triangle-exclamation"></i>
-                        <div class="risk-item-text">
-                            <strong>Discrepancias de medidas</strong>
-                            <span>Diferencias en tablas de tallaje típicas de confección asiática respecto al estándar latinoamericano.</span>
-                        </div>
-                    </div>
-                    <div class="risk-item">
-                        <i class="fa-solid fa-triangle-exclamation"></i>
-                        <div class="risk-item-text">
-                            <strong>Continuidad en insumos</strong>
-                            <span>Posibles cambios de stock de forros, botones decorativos o rollos de tela por parte del taller.</span>
-                        </div>
-                    </div>
-                    <div class="risk-item">
-                        <i class="fa-solid fa-triangle-exclamation"></i>
-                        <div class="risk-item-text">
-                            <strong>Plazos de entrega variables</strong>
-                            <span>Demoras imprevistas en la cola de producción de la fábrica según saturación de pedidos.</span>
-                        </div>
-                    </div>
-                    <div class="risk-item">
-                        <i class="fa-solid fa-triangle-exclamation"></i>
-                        <div class="risk-item-text">
-                            <strong>Actualizaciones de cotización</strong>
-                            <span>Variaciones del precio final de insumos por fluctuación de fibras en el mercado internacional.</span>
-                        </div>
-                    </div>
-                    <div class="risk-item">
-                        <i class="fa-solid fa-triangle-exclamation"></i>
-                        <div class="risk-item-text">
-                            <strong>Fluctuación logística internacional</strong>
-                            <span>Variabilidad de fletes internacionales y sobrecostos en terminales de almacenamiento local.</span>
-                        </div>
-                    </div>
-                    <div class="risk-item" style="grid-column: span 2;">
-                        <i class="fa-solid fa-triangle-exclamation"></i>
-                        <div class="risk-item-text">
-                            <strong>Diferencias de calidad entre lotes</strong>
-                            <span>Posibles desviaciones técnicas en costuras o acabados entre lotes separados de producción.</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="callout-box" style="border-left-color: var(--gold-light); margin-top: 2rem;">
-                    <h4><i class="fa-solid fa-shield-halved"></i> Limitación de Responsabilidad y Mitigación de Riesgos</h4>
-                    <p style="font-size: 0.88rem; line-height: 1.5; color: var(--text-dark); font-weight: normal; margin-top: 0.4rem;">
-                        Las estimaciones comerciales, de precios y plazos de este informe son de carácter referencial e ilustrativo. Smart Import Trade no garantiza la calidad final, medidas ni comportamiento comercial de los lotes de producción. Es responsabilidad única del importador gestionar el control de calidad, solicitar el envío de contramuestras físicas homologadas e instruir inspecciones preembarque en origen antes del despacho definitivo de la carga para resguardar su inversión.
-                    </p>
-                </div>
-                
-                <div class="risk-obs" style="margin-top: 1.5rem;">
-                    <i class="fa-solid fa-circle-info"></i>
-                    <div>
-                        <strong>Observación de Mitigación SIT:</strong> Aconsejamos solicitar videos reales del lote en taller y emplear un inspector de control de calidad independiente previo al pago del saldo de producción (70%).
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- TIMELINE -->
-        <section id="cronograma">
-            <h2 class="section-title">11. Cronograma de Próximos Pasos</h2>
-            <p class="intro-text">Plan operativo sugerido para la toma de decisiones y validación del proyecto:</p>
-            
-            <div class="timeline-container">
-                <div class="timeline-step active">
-                    <div class="timeline-icon"><i class="fa-solid fa-hand-pointer"></i></div>
-                    <h4>1. Selección</h4>
-                    <p>Definir el mix final de 4-5 referencias.</p>
-                </div>
-                <div class="timeline-step active">
-                    <div class="timeline-icon"><i class="fa-solid fa-photo-film"></i></div>
-                    <h4>2. Multimedia</h4>
-                    <p>Revisar fotos y videos reales de fábrica.</p>
-                </div>
-                <div class="timeline-step">
-                    <div class="timeline-icon"><i class="fa-solid fa-vial"></i></div>
-                    <h4>3. Muestras</h4>
-                    <p>Inspección de muestras físicas (opcional).</p>
-                </div>
-                <div class="timeline-step">
-                    <div class="timeline-icon"><i class="fa-solid fa-calculator"></i></div>
-                    <h4>4. Costeo</h4>
-                    <p>Cálculo de impuestos y flete local.</p>
-                </div>
-                <div class="timeline-step">
-                    <div class="timeline-icon"><i class="fa-solid fa-chart-line"></i></div>
-                    <h4>5. Viabilidad</h4>
-                    <p>Evaluación de márgenes en Perú.</p>
-                </div>
-                <div class="timeline-step">
-                    <div class="timeline-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
-                    <h4>6. Compra</h4>
-                    <p>Emisión de Orden (PO) y depósito 30%.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- RECOMENDACIÓN ESTRATÉGICA -->
-        <section id="estrategia">
-            <h2 class="section-title">12. Recomendación Estratégica de Inversión</h2>
-            <p class="intro-text">Simulador dinámico preliminar para evaluar la distribución del presupuesto objetivo de USD 5,000 en base al MOQ unitario. Selecciona los modelos de interés:</p>
-            
-            <!-- SIMULATOR WIDGET -->
-            <div class="simulator-widget">
-                <div class="simulator-inputs">
-                    <div class="input-group">
-                        <label for="simBudget">Presupuesto Referencial (USD)</label>
-                        <input type="number" id="simBudget" value="5000" min="1000" step="500" onchange="calculateSimulation()">
-                    </div>
-                    <div class="input-group">
-                        <label for="simQty">MOQ por Modelo (Lote Base)</label>
-                        <input type="number" id="simQty" value="200" min="50" step="50" onchange="calculateSimulation()">
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 1.5rem;">
-                    <h4 style="margin-bottom: 0.5rem;"><i class="fa-solid fa-list-check"></i> Seleccionar Referencias para Simulación:</h4>
-                    <div id="simCheckboxes" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; font-size: 0.85rem;">
-                        <!-- Checkboxes populated by JS -->
-                    </div>
-                </div>
-
-                <div class="simulator-results">
-                    <div class="sim-stat" id="simTotalOp1Wrap">
-                        <span>Total Opción 1 (Est.)</span>
-                        <strong id="simTotalOp1">$0.00</strong>
-                    </div>
-                    <div class="sim-stat highlight" id="simTotalOp2Wrap">
-                        <span>Total Opción 2 (Est.)</span>
-                        <strong id="simTotalOp2">$0.00</strong>
-                    </div>
-                    <div class="sim-stat highlight" id="simSavingsWrap">
-                        <span>Diferencia Estimada</span>
-                        <strong id="simSavings" style="color: var(--copper);">$0.00</strong>
-                    </div>
-                    <div class="sim-stat" id="simLeftoverWrap">
-                        <span>Balance Presupuesto</span>
-                        <strong id="simLeftover">$0.00</strong>
-                    </div>
-                </div>
-            </div>
-
-            <!-- INTERPRETACIÓN DEL ESCENARIO -->
-            <div class="callout-box" style="border-left: 5px solid var(--steel-gray); margin-top: 1.5rem;">
-                <h4><i class="fa-solid fa-calculator"></i> Consideraciones del Costeo Logístico</h4>
-                <p style="margin-bottom: 0.8rem; font-size: 0.95rem; font-weight: normal;">Los valores del simulador son netamente referenciales de origen (FOB). El costeo de importación total puesto en Perú deberá calcularse formalmente en base a:</p>
-                <ul class="alcance-list" style="margin-left: 1rem; font-size: 0.9rem;">
-                    <li>• Fletes aéreos o marítimos (según peso volumétrico definitivo).</li>
-                    <li>• Gastos operativos de agenciamiento de aduanas y descarga.</li>
-                    <li>• Impuestos de importación correspondientes (Arancel, IGV, IPM, Percepción).</li>
-                    <li>• Transporte interno desde almacén aduanero a destino final.</li>
-                </ul>
-            </div>
-
-            <div class="callout-box copper-solid">
-                <h4><i class="fa-solid fa-lightbulb"></i> Recomendación Sourcing Smart Import Trade</h4>
-                <p style="font-weight: normal;">Sugerimos iniciar la evaluación con una <strong>Colección Piloto de 4 modelos (800 unidades)</strong>, seleccionando los Items <strong>4, 6, 10 y 11</strong> de la <strong>Opción 2</strong>. Este mix representa una inversión de origen de <strong>USD 5,124.00</strong>, optimizando la asignación de capital frente a la Opción 1 para el mismo conjunto.</p>
-            </div>
-        </section>
-
-        <!-- CARTA DEL CONSULTOR / CIERRE -->
-        <section id="carta">
-            <h2 class="section-title">Carta del Consultor</h2>
-            <div class="presentation-letter">
-                <p class="intro-text">Estimados Gisela y Wilfredo:</p>
-                <p style="margin-bottom: 1rem;">Concluido el análisis preliminar de sourcing para la colección de Blazers, Chaquetas Tweed y Cárdigans, reafirmamos nuestro compromiso de acompañar a <strong>Importaciones Manorca S.A.C.</strong> en sus decisiones operativas y comerciales de comercio exterior.</p>
-                <p style="margin-bottom: 1rem;">Como se detalla a lo largo de este estudio, la <strong>Opción 2 (Proveedor ID-MU)</strong> se presenta como la vía más eficiente desde la perspectiva de optimización de costos unitarios de adquisición FOB, permitiendo estructurar una orden piloto inicial de bajo riesgo comercial.</p>
-                <p style="margin-bottom: 1rem;">Quedamos a su entera disposición para iniciar la siguiente fase del proyecto, que comprende la solicitud de muestras físicas homologadas en origen y el desarrollo del costeo logístico de importación integral puesto en sus almacenes.</p>
-                
-                <div class="callout-box" style="border-left: 5px solid var(--copper); margin-top: 2rem; margin-bottom: 2rem;">
-                    <h4><i class="fa-solid fa-square-check"></i> Conclusión y Recomendación Final SIT</h4>
-                    <p style="margin-bottom: 0.8rem; font-size: 0.95rem; font-weight: normal;">La viabilidad preliminar detectada justifica avanzar hacia una colección piloto limitada. Se aconseja utilizar el presupuesto de forma estratégica para validar la recepción local del producto antes de proceder con órdenes de mayor volumen.</p>
-                </div>
-
-                <div class="signature-block">
-                    <div>
-                        <p style="font-weight: 500;">Cordialmente,</p>
-                        <p style="font-weight: 600; color: var(--copper); margin-top: 0.5rem; font-family: 'Montserrat';">SMART IMPORT TRADE</p>
-                        <p style="font-size: 0.8rem; color: var(--text-light);">Sourcing & Comercio Exterior</p>
-                    </div>
-                    <div class="signature">
-                        Firma de Aceptación<br>Importaciones Manorca
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- CONTRAPORTADA -->
-        <footer class="back-cover" id="contraportada">
-            <img src="LOGO1 400x83 (1).png" alt="Smart Import Trade Logo" style="filter: brightness(0) invert(1);" onerror="this.style.display='none';">
-            <h3>Importaciones · Sourcing Internacional · Desarrollo de Proveedores · Comercio Exterior</h3>
-            
-            <blockquote>
-                "Nuestra misión es identificar oportunidades de importación rentables, reducir riesgos comerciales y optimizar la inversión de nuestros clientes."
-            </blockquote>
-            
-            <p class="footer-sub">Documento confidencial – Uso exclusivo de Importaciones Manorca S.A.C.</p>
-            <p class="footer-sub" style="margin-top: 0.5rem; color: var(--gold-light); font-weight: 500;">www.smartimporttrade.com</p>
-        </footer>
-
     </main>
-</div>
 
-<!-- PRODUCT MODAL -->
-<div class="modal" id="prodModal">
-    <div class="modal-content">
-        <span class="modal-close" onclick="closeModal()">&times;</span>
-        <img id="modalImg" class="modal-img" src="" alt="Product Detail">
-        <div class="modal-details">
-            <h3 id="modalTitle">Product Title</h3>
-            <p id="modalDesc">Description text goes here.</p>
-            <div class="modal-pricing-grid">
-                <div>
-                    <span>Precio Opción 1</span>
-                    <strong id="modalPriceOp1">$0.00</strong>
-                </div>
-                <div>
-                    <span>Precio Opción 2</span>
-                    <strong id="modalPriceOp2">$0.00</strong>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+    <!-- SCROLL SPY CONMUTADOR DE SECCIÓN -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.section-block');
+            const navItems = document.querySelectorAll('.nav-item');
 
-<script>
-    // --- JS OBJECT REPRESENTATION OF THE 15 SOURCED ITEMS ---
-    const products = [
-        {
-            id: 1,
-            name: "Blazer blanco doble botonadura",
-            desc_op1: "Blazer de tweed bouclé estructurado con doble botonadura, botones dorados y bolsillos funcionales. Colores: blanco y negro.",
-            colors_op1: "Blanco, Negro",
-            sizes_op1: "S, M, L",
-            price_op1: 40.80,
-            desc_op2: "Blazer de tweed bouclé estructurado con doble botonadura, botones dorados y bolsillos funcionales. Colores: negro y blanco.",
-            colors_op2: "Negro, Blanco",
-            sizes_op2: "S, M, L",
-            price_op2: 16.89,
-            img_op1: "fotos%20blazer/1.jpeg",
-            img_op2: "fotos%20blazer/1.jpeg",
-            obs: "Opción 2 ofrece un ahorro del 58.6% con patrón visual análogo. Requiere validar composición física."
-        },
-        {
-            id: 2,
-            name: "Blazer rosado tweed",
-            desc_op1: "Blazer de tweed bouclé con corte princesa y doble botonadura dorada. Colores: rosa, blanco, negro, marrón, rojo y azul.",
-            colors_op1: "Rosa, Blanco, Negro, Marrón, Rojo, Azul",
-            sizes_op1: "S, M, L",
-            price_op1: 15.84,
-            desc_op2: "Blazer de tweed con corte princesa y doble botonadura dorada. Colores: rosa, blanco, negro, rojo y azul.",
-            colors_op2: "Rosa, Blanco, Negro, Rojo, Azul",
-            sizes_op2: "S, M, L",
-            price_op2: 11.59,
-            img_op1: "fotos%20blazer/2.jpeg",
-            img_op2: "fotos%20blazer/2.jpeg",
-            obs: "Opción 2 reduce el costo en 26.8%, limitando ligeramente la gama de colores a 5 tonos en lugar de 6."
-        },
-        {
-            id: 3,
-            name: "Blazer tweed cropped",
-            desc_op1: "Blazer de tweed estilo cropped con botones dorados. Colores: amarillo, azul, negro y blanco roto.",
-            colors_op1: "Amarillo, Azul, Negro, Blanco roto",
-            sizes_op1: "S, M, L",
-            price_op1: 18.00,
-            desc_op2: "Blazer de tweed estilo cropped con doble botonadura y botones dorados. Color: azul.",
-            colors_op2: "Azul",
-            sizes_op2: "S, M, L",
-            price_op2: 11.00,
-            img_op1: "fotos%20blazer/3.jpeg",
-            img_op2: "fotos%20blazer/3.jpeg",
-            obs: "Opción 2 es 38.9% más económica, pero el fabricante la ofrece únicamente en color azul."
-        },
-        {
-            id: 4,
-            name: "Chaqueta Chanel negra",
-            desc_op1: "Chaqueta corta de tweed estilo Chanel con botones metálicos. Color: negro.",
-            colors_op1: "Negro",
-            sizes_op1: "S, M, L",
-            price_op1: 18.00,
-            desc_op2: "Chaqueta corta de tweed estilo Chanel con botones dorados. Color: negro.",
-            colors_op2: "Negro",
-            sizes_op2: "S, M, L",
-            price_op2: 5.79,
-            img_op1: "fotos%20blazer/4.jpeg",
-            img_op2: "fotos%20blazer/4.jpeg",
-            obs: "Ahorro crítico de 67.8%. Se proyecta como la prenda de mayor margen unitario y retorno comercial."
-        },
-        {
-            id: 5,
-            name: "Chaqueta tweed francés",
-            desc_op1: "Chaqueta corta de tweed francés con botones de perla y forro satinado. Color: verde.",
-            colors_op1: "Verde",
-            sizes_op1: "S, M, L",
-            price_op1: 21.84,
-            desc_op2: "Chaqueta corta de tweed francés con botones de perla y forro satinado. Color: azul.",
-            colors_op2: "Azul",
-            sizes_op2: "S, M, L",
-            price_op2: 11.78,
-            img_op1: "fotos%20blazer/5.jpeg",
-            img_op2: "fotos%20blazer/5.jpeg",
-            obs: "Opción 2 es 46.1% más económica; difiere levemente en los botones (perlas vs. metálicos)."
-        },
-        {
-            id: 6,
-            name: "Abrigo camel largo",
-            desc_op1: "Abrigo largo con doble botonadura dorada y corte princesa. Colores: caqui, gris, negro, naranja, verde militar, burdeos, azul y celeste.",
-            colors_op1: "Caqui, Gris, Negro, Naranja, Burdeos, Azul, etc.",
-            sizes_op1: "S, M, L, XL",
-            price_op1: 13.20,
-            desc_op2: "Abrigo largo con doble botonadura dorada y corte princesa. Colores: blanco, caqui, negro y gris.",
-            colors_op2: "Blanco, Caqui, Negro, Gris",
-            sizes_op2: "S, M, L, XL",
-            price_op2: 8.25,
-            img_op1: "fotos%20blazer/6.jpeg",
-            img_op2: "fotos%20blazer/6.jpeg",
-            obs: "Diferencia de costo de 37.5% a favor de Opción 2. Prenda pesada de alto valor percibido."
-        },
-        {
-            id: 7,
-            name: "Chaqueta blazer ribetes",
-            desc_op1: "Chaqueta blazer estructurada con ribetes en contraste y cinturón decorativo. Colores: blanco y negro.",
-            colors_op1: "Blanco, Negro",
-            sizes_op1: "S, M, L",
-            price_op1: 21.84,
-            desc_op2: "Chaqueta blazer estructurada con ribetes en contraste y cinturón decorativo. Colores: negro y blanco.",
-            colors_op2: "Negro, Blanco",
-            sizes_op2: "S, M, L",
-            price_op2: 15.51,
-            img_op1: "fotos%20blazer/7.jpeg",
-            img_op2: "fotos%20blazer/7.jpeg",
-            obs: "Ahorro de 29.0% en Opción 2. El fabricante incluye cinturón decorativo estructuralmente similar."
-        },
-        {
-            id: 8,
-            name: "Blazer doble botonadura moderno",
-            desc_op1: "Chaqueta blazer con cinturón ajustable y doble botonadura de estilo moderno. Diseño estampado.",
-            colors_op1: "Diseño Estampado",
-            sizes_op1: "S, M, L",
-            price_op1: 31.20,
-            desc_op2: "Chaqueta blazer con cinturón ajustable y doble botonadura de estilo moderno. Color: negro.",
-            colors_op2: "Negro",
-            sizes_op2: "S, M, L",
-            price_op2: 6.09,
-            img_op1: "fotos%20blazer/8.jpeg",
-            img_op2: "fotos%20blazer/8opcion 2.jpg",
-            obs: "Fuerte ahorro en Opción 2 (80.5%), pero suministrado en color entero negro en lugar de estampado."
-        },
-        {
-            id: 9,
-            name: "Cárdigan perlas decorativas",
-            desc_op1: "Cárdigan corto de punto con perlas decorativas. Colores: rojo, rosa, flor de cerezo, amarillo, beige y azul.",
-            colors_op1: "Rojo, Rosa, Cerezo, Amarillo, Beige, Azul",
-            sizes_op1: "S, M, L",
-            price_op1: 18.00,
-            desc_op2: "Cárdigan corto de punto con perlas decorativas. Colores: blanco, rosa, amarillo, verde, azul y negro.",
-            colors_op2: "Blanco, Rosa, Amarillo, Verde, Azul, Negro",
-            sizes_op2: "Talla Única",
-            price_op2: 7.85,
-            img_op1: "fotos%20blazer/9.jpeg",
-            img_op2: "fotos%20blazer/9.jpeg",
-            obs: "Opción 2 reduce costo en 56.4%, aunque se restringe a talla única en comparación con la Opción 1."
-        },
-        {
-            id: 10,
-            name: "Cárdigan punto texturizado",
-            desc_op1: "Cárdigan de punto texturizado con ribetes negros y botones decorativos. Color: blanco.",
-            colors_op1: "Blanco",
-            sizes_op1: "S, M, L",
-            price_op1: 9.60,
-            desc_op2: "Cárdigan de punto texturizado con ribetes negros y botones decorativos. Colores: negro y blanco.",
-            colors_op2: "Negro, Blanco",
-            sizes_op2: "S, M, L",
-            price_op2: 7.07,
-            img_op1: "fotos%20blazer/10.jpeg",
-            img_op2: "fotos%20blazer/10.jpeg",
-            obs: "Ahorro de 26.4% en Opción 2. Producto clave para media estación por su estilo minimalista."
-        },
-        {
-            id: 11,
-            name: "Cárdigan punto acanalado",
-            desc_op1: "Cárdigan tejido de punto acanalado con cuello marinero y botones decorativos. Colores: blanco y rojo.",
-            colors_op1: "Blanco, Rojo",
-            sizes_op1: "S, M, L",
-            price_op1: 11.70,
-            desc_op2: "Cárdigan tejido de punto acanalado con botones de perla. Colores: rosa, albaricoque, amarillo, rojo y negro.",
-            colors_op2: "Rosa, Albaricoque, Amarillo, Rojo, Negro",
-            sizes_op2: "S, M, L",
-            price_op2: 4.52,
-            img_op1: "fotos%20blazer/11.jpeg",
-            img_op2: "fotos%20blazer/11.jpeg",
-            obs: "Ahorro de 61.4% en Opción 2, posicionándolo como el modelo tejido de menor costo del portafolio."
-        },
-        {
-            id: 12,
-            name: "Cárdigan con volantes",
-            desc_op1: "Cárdigan con volantes y botones metálicos decorativos. Colores: marrón, café, azul cielo, rosa, blanco, negro y rojo.",
-            colors_op1: "Marrón, Café, Celeste, Rosa, Blanco, Negro, Rojo",
-            sizes_op1: "S, M, L",
-            price_op1: 12.00,
-            desc_op2: "Cárdigan con volantes y botones metálicos decorativos. Colores: rosa, negro, blanco, rojo y azul cielo.",
-            colors_op2: "Rosa, Negro, Blanco, Rojo, Celeste",
-            sizes_op2: "S, M, L",
-            price_op2: 9.43,
-            img_op1: "fotos%20blazer/12.jpeg",
-            img_op2: "fotos%20blazer/12.jpeg",
-            obs: "Ahorro de 21.4% en Opción 2. Se reduce la disponibilidad de colores de 7 a 5 variantes."
-        },
-        {
-            id: 13,
-            name: "Blusa entallada manga larga",
-            desc_op1: "Blusa entallada de manga larga con volantes y botones. Colores: blanco roto, rojo y azul oscuro.",
-            colors_op1: "Blanco roto, Rojo, Azul oscuro",
-            sizes_op1: "S, M, L",
-            price_op1: 10.80,
-            desc_op2: "Prenda de poliéster. Color según imagen.",
-            colors_op2: "Según imagen",
-            sizes_op2: "S, M, L",
-            price_op2: 3.20,
-            img_op1: "fotos%20blazer/13.jpeg",
-            img_op2: "fotos%20blazer/13opcion 2.jpg",
-            isComplementary: true,
-            obs: "Producto complementario con 70.4% de reducción en Opción 2. Excelente viabilidad para campaña cruzada."
-        },
-        {
-            id: 14,
-            name: "Chaqueta biker Balmain",
-            desc_op1: "Chaqueta biker de cuero sintético estilo Balmain con botones dorados decorativos. Material: PU.",
-            colors_op1: "Marrón / Negro",
-            sizes_op1: "S, M, L",
-            price_op1: 32.40,
-            desc_op2: "Chaqueta biker de cuero sintético estilo Balmain con botones dorados. Color: negro.",
-            colors_op2: "Negro",
-            sizes_op2: "S, M, L",
-            price_op2: 52.63,
-            img_op1: "fotos%20blazer/14.jpeg",
-            img_op2: "fotos%20blazer/14.jpeg",
-            isComplementary: true,
-            obs: "¡Atención! Opción 2 es 62.4% más costosa. Se recomienda mantener el proveedor de la Opción 1 para este ítem."
-        },
-        {
-            id: 15,
-            name: "Termo térmico 40 oz",
-            desc_op1: "Termo térmico de 40 oz con aislamiento al vacío y tapa hermética. Color: rosa.",
-            colors_op1: "Rosa",
-            sizes_op1: "40 oz",
-            price_op1: 14.40,
-            desc_op2: "Termo térmico de 40 oz con aislamiento al vacío y tapa hermética. Colores: azul y rosa.",
-            colors_op2: "Azul, Rosa",
-            sizes_op2: "40 oz",
-            price_op2: 8.44,
-            img_op1: "fotos%20blazer/15.jpeg",
-            img_op2: "fotos%20blazer/15.jpeg",
-            isComplementary: true,
-            obs: "Ahorro del 41.4% en Opción 2. Útil como artículo promocional o de impulso para fidelización."
-        }
-    ];
+            window.addEventListener('scroll', () => {
+                let currentSec = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= (sectionTop - 240)) {
+                        currentSec = section.getAttribute('id');
+                    }
+                });
 
-    // --- DARK/LIGHT THEME SWITCH ---
-    const themeBtn = document.getElementById('themeBtn');
-    themeBtn.addEventListener('click', () => {
-        document.body.classList.toggle('dark-theme');
-        const icon = themeBtn.querySelector('i');
-        if(document.body.classList.contains('dark-theme')) {
-            icon.className = 'fa-solid fa-sun';
-        } else {
-            icon.className = 'fa-solid fa-moon';
-        }
-    });
-
-    // --- RENDER CATALOG TABLES ---
-    function renderCatalogs() {
-        const bodyOp1 = document.getElementById('catalogOp1Body');
-        const bodyOp2 = document.getElementById('catalogOp2Body');
-        const bodyComp = document.getElementById('compareBody');
-        
-        bodyOp1.innerHTML = '';
-        bodyOp2.innerHTML = '';
-        bodyComp.innerHTML = '';
-        
-        products.forEach(p => {
-            // Render Op 1 Row
-            const row1 = document.createElement('tr');
-            row1.innerHTML = `
-                <td style="text-align:center; font-weight:600;">${p.id}</td>
-                <td style="text-align:center;"><img src="${p.img_op1}" class="product-thumb" onclick="openModal(${p.id})" alt="${p.name}"></td>
-                <td><strong>${p.name}</strong><br><span style="font-size:0.8rem; color:var(--text-light);">${p.desc_op1}</span></td>
-                <td><span style="font-size:0.8rem;">Colores: ${p.colors_op1}<br>Tallas: ${p.sizes_op1}</span></td>
-                <td style="text-align:right;" class="price-text">$${p.price_op1.toFixed(2)}</td>
-                <td style="text-align:right;" class="price-text">$${(p.price_op1 * 200).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-            `;
-            bodyOp1.appendChild(row1);
-
-            // Render Op 2 Row
-            const row2 = document.createElement('tr');
-            row2.innerHTML = `
-                <td style="text-align:center; font-weight:600;">${p.id}</td>
-                <td style="text-align:center;"><img src="${p.img_op2}" class="product-thumb" onclick="openModal(${p.id})" alt="${p.name}"></td>
-                <td><strong>${p.name}</strong><br><span style="font-size:0.8rem; color:var(--text-light);">${p.desc_op2}</span></td>
-                <td><span style="font-size:0.8rem;">Colores: ${p.colors_op2}<br>Tallas: ${p.sizes_op2}</span></td>
-                <td style="text-align:right;" class="price-text">$${p.price_op2.toFixed(2)}</td>
-                <td style="text-align:right;" class="price-text">$${(p.price_op2 * 200).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-            `;
-            bodyOp2.appendChild(row2);
-
-            // Render Compare Row
-            const pct = ((p.price_op2 - p.price_op1) / p.price_op1) * 100;
-            const isSaving = pct < 0;
-            const diffSign = pct > 0 ? '+' : '';
-            const diffClass = isSaving ? 'saving' : 'negative';
-            const rowC = document.createElement('tr');
-            rowC.innerHTML = `
-                <td style="text-align:center; font-weight:600;">${p.id}</td>
-                <td><strong>${p.name}</strong></td>
-                <td style="text-align:right;" class="price-text">$${p.price_op1.toFixed(2)}</td>
-                <td style="text-align:right;" class="price-text">$${p.price_op2.toFixed(2)}</td>
-                <td style="text-align:right;" class="price-text ${diffClass}">${diffSign}${pct.toFixed(1)}%</td>
-                <td><span style="font-size:0.85rem;">${p.obs || ''}</span></td>
-            `;
-            bodyComp.appendChild(rowC);
+                navItems.forEach(item => {
+                    item.classList.remove('active');
+                    if (item.getAttribute('data-sec') === currentSec) {
+                        item.classList.add('active');
+                    }
+                });
+            });
         });
-    }
+    </script>
 
-    // --- RENDER FEATURED MODELS ---
-    const featuredModels = [
-        {
-            num: 1, id: 1, img: "fotos%20blazer/1.jpeg",
-            name: "Blazer blanco doble botonadura",
-            meta: "Modelo Destacado 1 | Blazer Sastrero Premium",
-            bullets: [
-                "Alta percepción de valor gracias a su sastrero clásico estructurado.",
-                "Corte con doble botonadura dorada de gran aceptación en el mercado formal y casual elegante.",
-                "Estructura robusta de costura que realza la silueta, ideal como prenda ancla de la colección."
-            ],
-            comment: "El blazer blanco es un básico atemporal de gran demanda. Su alta percepción estética justifica plenamente su incorporación en el portafolio piloto."
-        },
-        {
-            num: 2, id: 2, img: "fotos%20blazer/2.jpeg",
-            name: "Blazer rosado tweed",
-            meta: "Modelo Destacado 2 | Colección Tweed Bouclé",
-            bullets: [
-                "Diseño contemporáneo en tejido de tweed bouclé rosa, con alto interés comercial en moda femenina.",
-                "Corte princesa estructurado orientado a un óptimo ajuste y caída estilizada.",
-                "Gran versatilidad comercial para campañas de media estación y temporadas invernales."
-            ],
-            comment: "La textura de tweed bouclé en tonos rosa es tendencia internacional. Genera un gran atractivo visual y diferenciación en exhibición comercial."
-        },
-        {
-            num: 3, id: 4, img: "fotos%20blazer/4.jpeg",
-            name: "Chaqueta negra estilo Chanel",
-            meta: "Modelo Destacado 3 | Chaqueta Corta Atemporal",
-            bullets: [
-                "Corte clásico cropped estilo Chanel, una pieza de alta rotación en moda femenina.",
-                "El color negro se proyecta como una opción de menor riesgo de inventario lento.",
-                "Costo de adquisición sumamente competitivo en la Opción 2 ($5.79), maximizando el margen potencial."
-            ],
-            comment: "Representa el modelo con menor costo FOB unitario de la evaluación, facilitando un margen comercial óptimo con baja exposición de capital."
-        },
-        {
-            num: 4, id: 6, img: "fotos%20blazer/6.jpeg",
-            name: "Abrigo camel largo",
-            meta: "Modelo Destacado 4 | Abrigo Largo Princesa",
-            bullets: [
-                "Prenda de ticket promedio superior, ideal para incrementar el valor de la canasta de compra.",
-                "Corte princesa con solapa clásica y botones metálicos de apariencia elegante.",
-                "Colores comerciales tradicionales de alta demanda estacional (camel, caqui y negro)."
-            ],
-            comment: "Representa la prenda de mayor valor FOB de la colección. Su inclusión aporta representatividad y madurez estética a la marca."
-        },
-        {
-            num: 5, id: 10, img: "fotos%20blazer/10.jpeg",
-            name: "Cárdigan blanco",
-            meta: "Modelo Destacado 5 | Cárdigan Texturizado",
-            bullets: [
-                "Textura de punto suave con ribetes negros en contraste de estilo minimalista.",
-                "Prenda cómoda y ligera, ideal para media estación y uso cotidiano.",
-                "Costo unitario altamente competitivo ($7.07), propicio para compras complementarias."
-            ],
-            comment: "Funciona perfectamente como producto complementario. Atrae a clientes que buscan una opción relajada pero formal."
-        }
-    ];
-
-    function renderFeatured() {
-        const grid = document.getElementById('featuredGrid');
-        grid.innerHTML = '';
-        featuredModels.forEach(m => {
-            const el = document.createElement('div');
-            el.className = 'featured-item';
-            el.innerHTML = `
-                <div class="featured-img-wrap">
-                    <span class="featured-number">${m.num}</span>
-                    <img src="${m.img}" alt="${m.name}">
-                </div>
-                <div class="featured-details">
-                    <div class="featured-header">
-                        <h3>${m.name}</h3>
-                        <span class="model-meta">${m.meta}</span>
-                    </div>
-                    <div class="featured-bullets">
-                        ${m.bullets.map(b => `<p>${b}</p>`).join('')}
-                    </div>
-                    <div class="sit-comment">
-                        <strong>Smart Import Trade Comment:</strong> ${m.comment}
-                    </div>
-                </div>
-            `;
-            grid.appendChild(el);
-        });
-    }
-
-    // --- RENDER RANKING ---
-    const rankingItems = [
-        { puesto: "🥇 1° Lugar", name: "Chaqueta Chanel negra", id: 4, score: "36/40", costo: 10, diseno: 8, rotacion: 9 },
-        { puesto: "🥈 2° Lugar", name: "Cárdigan punto texturizado", id: 10, score: "34/40", costo: 8, diseno: 8, rotacion: 9 },
-        { puesto: "🥉 3° Lugar", name: "Cárdigan punto acanalado", id: 11, score: "34/40", costo: 10, diseno: 7, rotacion: 8 },
-        { puesto: "4° Puesto", name: "Abrigo camel largo", id: 6, score: "33/40", costo: 8, diseno: 8, rotacion: 7 },
-        { puesto: "5° Puesto", name: "Blazer blanco doble botonadura", id: 1, score: "32/40", costo: 6, diseno: 9, rotacion: 9 }
-    ];
-
-    function renderRanking() {
-        const grid = document.getElementById('rankingGrid');
-        grid.innerHTML = '';
-        rankingItems.forEach(r => {
-            const el = document.createElement('div');
-            el.className = 'ranking-card';
-            
-            let medal = "🏆";
-            if (r.puesto.includes("🥇")) medal = "🥇";
-            else if (r.puesto.includes("🥈")) medal = "🥈";
-            else if (r.puesto.includes("🥉")) medal = "🥉";
-            else medal = "⭐";
-            
-            el.innerHTML = `
-                <span class="ranking-badge-icon">${medal}</span>
-                <h3>${r.name}</h3>
-                <div class="ranking-score">${r.score}</div>
-                <div class="criteria-bars">
-                    <div class="criteria-item">
-                        <div class="criteria-label"><span>Precio (Costo)</span><span>${r.costo}/10</span></div>
-                        <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width: ${r.costo * 10}%"></div></div>
-                    </div>
-                    <div class="criteria-item">
-                        <div class="criteria-label"><span>Diseño</span><span>${r.diseno}/10</span></div>
-                        <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width: ${r.diseno * 10}%"></div></div>
-                    </div>
-                    <div class="criteria-item">
-                        <div class="criteria-label"><span>Rotación</span><span>${r.rotacion}/10</span></div>
-                        <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width: ${r.rotacion * 10}%"></div></div>
-                    </div>
-                </div>
-            `;
-            grid.appendChild(el);
-        });
-    }
-
-    // --- RENDER COMPLEMENTARY PRODUCTS ---
-    const complementaryItems = [
-        { name: "Blusa entallada manga larga (Item 13)", desc: "Blusa de manga larga con volantes y botones. La combinación perfecta para acompañar la colección sastrera.", price_op1: 10.80, price_op2: 3.20, img: "fotos%20blazer/13opcion 2.jpg", alert: "Excelente ahorro unitario de $7.60 en Opción 2." },
-        { name: "Chaqueta biker Balmain (Item 14)", desc: "Chaqueta biker de PU estilo Balmain con botones decorativos dorados. Perfil juvenil-rebelde.", price_op1: 32.40, price_op2: 52.63, img: "fotos%20blazer/14.jpeg", alert: "¡Cuidado! La Opción 1 es sustancialmente más económica aquí." },
-        { name: "Termo térmico 40 oz (Item 15)", desc: "Termo de acero inoxidable con asa, ideal para merchandising, fidelización o venta minorista de impulso.", price_op1: 14.40, price_op2: 8.44, img: "fotos%20blazer/15.jpeg", alert: "Artículo promocional de alta rotación y rentabilidad." }
-    ];
-
-    function renderComplementary() {
-        const grid = document.getElementById('compGrid');
-        grid.innerHTML = '';
-        complementaryItems.forEach(c => {
-            const el = document.createElement('div');
-            el.className = 'comp-card';
-            el.innerHTML = `
-                <img src="${c.img}" class="comp-img" alt="${c.name}">
-                <div class="comp-info">
-                    <div>
-                        <h4>${c.name}</h4>
-                        <p>${c.desc}</p>
-                    </div>
-                    <div>
-                        <div style="font-size:0.75rem; color:var(--copper); font-weight:600; margin-bottom: 0.5rem;">${c.alert}</div>
-                        <div class="comp-pricing">
-                            <span>Costo Op. 1: <strong>$${c.price_op1.toFixed(2)}</strong></span>
-                            <span>Costo Op. 2: <strong>$${c.price_op2.toFixed(2)}</strong></span>
-                        </div>
-                    </div>
-                </div>
-            `;
-            grid.appendChild(el);
-        });
-    }
-
-    // --- INTERACTIVE BUDGET SIMULATOR LOGIC ---
-    function setupSimulator() {
-        const checkWrap = document.getElementById('simCheckboxes');
-        checkWrap.innerHTML = '';
-        
-        products.forEach(p => {
-            // Check only the suggested Top 4 by default (Items 4, 6, 10, 11)
-            const isSuggested = [4, 6, 10, 11].includes(p.id);
-            const label = document.createElement('label');
-            label.style.display = 'flex';
-            label.style.alignItems = 'center';
-            label.style.gap = '0.5rem';
-            label.style.cursor = 'pointer';
-            
-            label.innerHTML = `
-                <input type="checkbox" value="${p.id}" ${isSuggested ? 'checked' : ''} onchange="calculateSimulation()">
-                <span>[Item ${p.id}] ${p.name} ($${p.price_op2.toFixed(2)})</span>
-            `;
-            checkWrap.appendChild(label);
-        });
-        
-        calculateSimulation();
-    }
-
-    window.calculateSimulation = function() {
-        const budget = parseFloat(document.getElementById('simBudget').value) || 5000;
-        const qty = parseInt(document.getElementById('simQty').value) || 200;
-        
-        const checkboxes = document.querySelectorAll('#simCheckboxes input[type="checkbox"]');
-        let totalOp1 = 0;
-        let totalOp2 = 0;
-        
-        checkboxes.forEach(cb => {
-            if(cb.checked) {
-                const prodId = parseInt(cb.value);
-                const prod = products.find(p => p.id === prodId);
-                if(prod) {
-                    totalOp1 += prod.price_op1 * qty;
-                    totalOp2 += prod.price_op2 * qty;
-                }
-            }
-        });
-        
-        const savings = totalOp1 - totalOp2;
-        const leftover = budget - totalOp2;
-        
-        // Render values
-        document.getElementById('simTotalOp1').innerText = `$${totalOp1.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
-        document.getElementById('simTotalOp2').innerText = `$${totalOp2.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
-        document.getElementById('simSavings').innerText = `$${savings.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
-        document.getElementById('simLeftover').innerText = `$${leftover.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
-        
-        // Handle warning colors
-        const op2Wrap = document.getElementById('simTotalOp2Wrap');
-        const leftoverWrap = document.getElementById('simLeftoverWrap');
-        
-        if (totalOp2 > budget) {
-            op2Wrap.className = 'sim-stat budget-warning';
-            leftoverWrap.className = 'sim-stat budget-warning';
-        } else {
-            op2Wrap.className = 'sim-stat highlight';
-            leftoverWrap.className = 'sim-stat highlight';
-        }
-    };
-
-    // --- MODAL IMAGE VIEW FUNCTION ---
-    window.openModal = function(productId) {
-        const prod = products.find(p => p.id === productId);
-        if(prod) {
-            document.getElementById('modalImg').src = prod.img_op2;
-            document.getElementById('modalTitle').innerText = prod.name;
-            document.getElementById('modalDesc').innerText = prod.desc_op2;
-            document.getElementById('modalPriceOp1').innerText = `$${prod.price_op1.toFixed(2)}`;
-            document.getElementById('modalPriceOp2').innerText = `$${prod.price_op2.toFixed(2)}`;
-            document.getElementById('prodModal').style.display = 'flex';
-        }
-    };
-
-    window.closeModal = function() {
-        document.getElementById('prodModal').style.display = 'none';
-    };
-
-    // Close modal on outside click
-    window.onclick = function(event) {
-        const modal = document.getElementById('prodModal');
-        if (event.target === modal) {
-            modal.style.display = 'none';
-        }
-    };
-
-    // --- ACTIVE SIDEBAR LINK SCROLL-SPY ---
-    const sections = document.querySelectorAll('section, .portada-hero, footer');
-    const navLi = document.querySelectorAll('.sidebar-menu li');
-
-    window.addEventListener('scroll', () => {
-        let current = '';
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            if (pageYOffset >= (sectionTop - 250)) {
-                current = section.getAttribute('id');
-            }
-        });
-
-        navLi.forEach(li => {
-            li.classList.remove('active');
-            const a = li.querySelector('a');
-            if (a.getAttribute('href') === `#${current}`) {
-                li.classList.add('active');
-            }
-        });
-    });
-
-    // --- DOWNLOAD PDF DIRECTLY ---
-    window.downloadPDF = function(btn) {
-        const link = document.createElement('a');
-        link.href = 'Informe_Sourcing_Manorca.pdf';
-        link.download = 'Informe_Sourcing_Manorca.pdf';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    };
-
-    // --- ON INICIALIZATION ---
-    renderCatalogs();
-    renderFeatured();
-    renderRanking();
-    renderComplementary();
-    setupSimulator();
-</script>
 </body>
 </html>
